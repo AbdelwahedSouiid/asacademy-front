@@ -1,0 +1,19 @@
+
+
+ .navbar-custom {
+   background-color: #f8f9fa;
+ }
+.avatar-online {
+  position: relative;
+}
+.avatar-online::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #28a745;
+  border-radius: 50%;
+  bottom: 0;
+  right: 0;
+  border: 2px solid #fff;
+}
