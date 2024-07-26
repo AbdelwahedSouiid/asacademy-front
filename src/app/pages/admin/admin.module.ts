@@ -11,6 +11,9 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import { Aside2Component } from './fixed/aside2/aside2.component';
 import { AddCourComponent } from './cour/add-cour/add-cour.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {AddCategorieComponent} from './categorie/add-categorie/add-categorie.component';
+import {HttpClientModule} from "@angular/common/http";
 
 
 
@@ -23,6 +26,7 @@ import { AddCourComponent } from './cour/add-cour/add-cour.component';
         FooterComponent,
         Aside2Component,
         AddCourComponent,
+      AddCategorieComponent,
 
 
     ],
@@ -35,8 +39,9 @@ import { AddCourComponent } from './cour/add-cour/add-cour.component';
         AdminRoutingModule,
         MatToolbarModule,
       MatButtonModule,
-      MatIconModule
-
+      MatIconModule,
+      ReactiveFormsModule,
+      HttpClientModule
 
     ]
 })

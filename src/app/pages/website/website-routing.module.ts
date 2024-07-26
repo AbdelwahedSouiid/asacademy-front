@@ -6,6 +6,8 @@ import {MainComponent} from "./fixed/main/main.component";
 import {HomeComponent} from "./home/home.component";
 import {ContactComponent} from "./contact/contact.component";
 import {CourComponent} from "./cour/cour.component";
+import {LoginComponent} from "./login/login.component";
+import {RegisterComponent} from "./register/register.component";
 
 
 const routes: Routes = [
@@ -13,9 +15,11 @@ const routes: Routes = [
     path: '',
     component: MainComponent,
     children: [
-      { path: '', component: HomeComponent },
-      { path: 'contact', component: ContactComponent },
-      {path: 'cour' , component: CourComponent }
+      {path: 'home', component: HomeComponent},
+      {path: 'contact', component: ContactComponent},
+      {path: 'cour', component: CourComponent},
+      {path: 'login', component: LoginComponent},
+      {path: 'register', component: RegisterComponent},
     ]
   }
 ];

@@ -225,7 +225,7 @@
 /*** Features Start ***/
 .features {
     width: 100%;
-    background: linear-gradient(rgba(26, 125, 255, 0.5), rgba(255, 255, 255, 0.3)), url(assets/img/features-background.jpg);
+  background: linear-gradient(rgb(250, 198, 99), rgba(255, 255, 255, 0.3)), url(assets/img/features-background.jpg);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -379,7 +379,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    background: linear-gradient(rgba(26, 125, 255, 0.7), rgba(255, 255, 255, 0.7));
+  background: linear-gradient(rgb(250, 198, 99), rgba(255, 255, 255, 0.7));
     z-index: 2;
 }
 /*** Banner Section End ***/

@@ -1,0 +1,56 @@
+
+.input-group .form-control {
+
+  font-size: .875rem; /* Adjust font size as needed */
+}
+
+.nav-item .dropdown-toggle {
+  border: 1px solid #fac663;
+}
+
+/* Border around the dropdown menu */
+.dropdown-menu {
+  border: 1px solid #fac663;
+}
+
+/* Optional: Border color on hover for dropdown items */
+.dropdown-item:hover {
+  border-bottom: 1px solid rgba(46, 41, 29, 0.55);
+}
+
+
+.navbar-nav .nav-item .dropdown-toggle {
+  height: 50px; /* Hauteur fixe pour le dropdown */
+  display: flex;
+  align-items: center;
+  padding: 0 1rem; /* Padding pour l'espacement intérieur */
+  font-size: 1rem; /* Taille de la police */
+  border-radius: 10px; /* Bordure arrondie pour correspondre aux autres éléments */
+}
+
+.input-group .form-control {
+  height: 50px; /* Hauteur fixe pour le champ de recherche */
+  border-radius: 10px; /* Bordure arrondie pour correspondre aux autres éléments */
+}
+
+.input-group .btn {
+  height: 50px; /* Hauteur fixe pour le bouton de recherche */
+  border-radius: 10px; /* Bordure arrondie pour correspondre aux autres éléments */
+  display: flex;
+  align-items: center; /* Alignement centré du contenu */
+  padding: 0 1rem; /* Padding pour l'espacement intérieur */
+}
+
+.btn-outline-primary {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.profile-image {
+  width: 40px; /* Adjust size as needed */
+  height: 40px; /* Adjust size as needed */
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover; /* Ensures the image covers the circular area */
+}

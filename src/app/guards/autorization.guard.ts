@@ -17,7 +17,7 @@ export class AuthorizationGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
     if (this.authService.isAuthenticated) {
       const requiredRoles = route.data['roles'] as string[];
-      const userRoles = this.authService.roles
+      const userRoles = this.authService.roles;
       console.log('Required roles:', requiredRoles);
       console.log('User roles:', userRoles);
 

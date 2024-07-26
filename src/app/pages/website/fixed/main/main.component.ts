@@ -21,8 +21,7 @@ export class MainComponent implements  OnInit{
     this.loadStyle('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@100;600;800&display=swap');
     this.loadStyle('https://use.fontawesome.com/releases/v5.15.4/css/all.css');
     this.loadStyle('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css');
-    this.loadStyle('assets/lib/animate/animate.min.css');
-    this.loadStyle('assets/lib/owlcarousel/assets/owl.carousel.min.css');
+
     this.loadStyle('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
     this.loadStyle('https://fonts.googleapis.com/icon?family=Material+Icons');
     this.loadStyle('assets/client-template/css/bootstrap.min.css');
@@ -31,8 +30,6 @@ export class MainComponent implements  OnInit{
     // Load JS
     this.loadScript('https://buttons.github.io/buttons.js');
     this.loadScript('https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js');
-    this.loadScript('assets/lib/easing/easing.min.js');
-    this.loadScript('assets/lib/waypoints/waypoints.min.js');
     this.loadScript('assets/js/main.js');
     this.loadScript('assets/admin-template/js/dashboard.js');
     this.loadScript('vendors/js/vendor.bundle.base.js');

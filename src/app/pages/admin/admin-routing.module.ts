@@ -6,6 +6,7 @@ import {MainComponent} from "./fixed/main/main.component";
 import {AuthenticationGuard} from "../../guards/authentication.guard";
 import {AuthorizationGuard} from "../../guards/autorization.guard";
 import {AddCourComponent} from "./cour/add-cour/add-cour.component";
+import {AddCategorieComponent} from "./categorie/add-categorie/add-categorie.component";
 
 
 
@@ -18,7 +19,8 @@ const routes: Routes = [
      data: { roles: ['ADMIN'] },
     children: [
       { path: '', component: DashboardComponent },
-      {path:'ajouterCour',component:AddCourComponent}
+      {path: 'ajouterCour', component: AddCourComponent},
+      {path: 'ajouterCategorie', component: AddCategorieComponent},
     ]
   }
 ];

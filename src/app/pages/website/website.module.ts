@@ -7,6 +7,10 @@ import { MainComponent } from './fixed/main/main.component';
 import {WebsiteRoutingModule} from "./website-routing.module";
 import { ContactComponent } from './contact/contact.component';
 import { CourComponent } from './cour/cour.component';
+import {LoginComponent} from "./login/login.component";
+import {RegisterComponent} from "./register/register.component";
+import {ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 
 
 
@@ -17,7 +21,9 @@ import { CourComponent } from './cour/cour.component';
         FooterComponent,
         MainComponent,
         ContactComponent,
-        CourComponent
+      CourComponent,
+      LoginComponent,
+      RegisterComponent,
     ],
   exports: [
     FooterComponent,
@@ -25,7 +31,9 @@ import { CourComponent } from './cour/cour.component';
   ],
     imports: [
         CommonModule,
-        WebsiteRoutingModule
+      WebsiteRoutingModule,
+      ReactiveFormsModule,
+      HttpClientModule
     ]
 })
 export class WebsiteModule { }
