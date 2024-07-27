@@ -16,7 +16,7 @@ export class AddCourComponent implements OnInit {
 
   courForm: FormGroup;
   categories: any[] = [];
-
+  selectedFile: File | null = null;
   constructor(private fb: FormBuilder,
               private categorieService: CategorieService,
               private courService: CourService,
@@ -27,7 +27,7 @@ export class AddCourComponent implements OnInit {
       description: ['', Validators.required],
       duree: ['', Validators.required],
       prix: ['', Validators.required],
-      video: ['', Validators.required]
+      affiche: ['', Validators.required]
     });
   }
 
@@ -53,11 +53,23 @@ export class AddCourComponent implements OnInit {
     }
 
     const cour: Cour = this.courForm.value;
-    console.log(cour);
+
     this.courService.ajouterCour(cour).subscribe(
       response => {
         console.log('Cour added successfully', response);
-        this.router.navigate(['/admin']);
+        if (this.selectedFile) {
+          this.courService.uploadImage(this.selectedFile, response.id).subscribe({
+            next: () => {
+              console.log('Image uploaded successfully');
+              this.router.navigateByUrl('/admin');
+            },
+            error: err => {
+              console.error('Image upload failed', err);
+            }
+          });
+        } else {
+          this.router.navigateByUrl('/admin');
+        }
       },
       error => {
         console.error('Error adding cour', error);
@@ -65,4 +77,12 @@ export class AddCourComponent implements OnInit {
     );
   }
 
+
+  onfileClick(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+    }
+
+  }
 }

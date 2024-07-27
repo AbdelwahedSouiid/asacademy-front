@@ -49,10 +49,10 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="exampleInputPhotoUrl1">Photo URL</label>
-              <input type="text" class="form-control" id="exampleInputPhotoUrl1"
-                     placeholder="Photo URL" formControlName="photoUrl">
-              <div *ngIf="formRegister.get('photoUrl')?.invalid && formRegister.get('photoUrl')?.touched"
+              <label for="InputPhoto">Photo URL</label>
+              <input type="file" class="form-control" id="InputPhoto"
+                     placeholder="Photo URL" formControlName="photo" (change)="onfileClick($event)">
+              <div *ngIf="formRegister.get('photo')?.invalid && formRegister.get('photo')?.touched"
                    class="text-danger">
                 Photo URL is required.
               </div>

@@ -1,6 +1,8 @@
 import {AfterViewInit, Component, OnInit, AfterViewChecked} from '@angular/core';
 import {CourService} from '../../../services/cour/cour.service';
 import {Cour} from "../../../model/cour.model";
+import {CategorieService} from "../../../services/categorie/categorie.service";
+import {Categorie} from "../../../model/categorie.model";
 
 declare var $: any; // Declare jQuery
 
@@ -12,13 +14,15 @@ declare var $: any; // Declare jQuery
 export class HomeComponent implements OnInit, AfterViewChecked {
 
   allCourses!: Cour[];
+  allCategories!: Categorie[];
   carouselInitialized = false;
 
-  constructor(private courService: CourService) {
+  constructor(protected courService: CourService, private categoryService: CategorieService) {
   }
 
   ngOnInit(): void {
     this.getCours();
+    this.getCategories();
   }
 
 
@@ -27,6 +31,17 @@ export class HomeComponent implements OnInit, AfterViewChecked {
       this.initializeCarousel();
       this.carouselInitialized = true;
     }
+  }
+
+  private getCategories() {
+
+    this.categoryService.getCategories().subscribe(
+      categories => {
+        this.allCategories = categories;
+      }, error => {
+        console.log('No Categories Found', error);
+      }
+    )
   }
 
   private getCours(): void {
@@ -45,11 +60,15 @@ export class HomeComponent implements OnInit, AfterViewChecked {
     $(".latest-news-carousel").owlCarousel({
       items: 4,
       loop: true,
-      margin: 10,
+      margin: 25,
       nav: true,
       dots: true,
       autoplay: true,
-      autoplayTimeout: 2000,
+      autoplayTimeout: 3000,
+      navText: [
+        '<i class="bi bi-arrow-left "></i>',
+        '<i class="bi bi-arrow-right"></i>'
+      ],
       responsive: {
         0: {
           items: 1

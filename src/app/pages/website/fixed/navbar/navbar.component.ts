@@ -11,7 +11,9 @@ import {Categorie} from "../../../../model/categorie.model";
 })
 export class NavbarComponent implements OnInit {
 
-  categories: any[] = [];
+  url: string = 'http://localhost:8081/projet/categorie';
+
+  categories: Categorie[] = [];
 
   constructor(public authService: AuthService,
               private router: Router,

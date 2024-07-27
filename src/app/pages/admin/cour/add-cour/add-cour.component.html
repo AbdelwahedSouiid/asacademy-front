@@ -77,13 +77,13 @@
         <div class="col-md-6 grid-margin">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Selectionner Formation</h4>
+              <h4 class="card-title">Selectionner l'affiche de formation</h4>
               <div class="form-group">
-                <label class="col-sm-12 col-form-label">Upload Image</label>
-                <input type="text" class="form-control" formControlName="video">
-                <div *ngIf="courForm.get('video')?.invalid && courForm.get('video')?.touched"
+                <label class="col-sm-12 col-form-label">Upload Affiche</label>
+                <input type="file" class="form-control" formControlName="affiche" (change)="onfileClick($event)">
+                <div *ngIf="courForm.get('affiche')?.invalid && courForm.get('affiche')?.touched"
                      class="text-danger">
-                  Image is required.
+                  Affiche is required.
                 </div>
               </div>
               <div class="text-right">
@@ -92,7 +92,6 @@
             </div>
           </div>
         </div>
-
 
       </div>
     </form>

@@ -11,19 +11,27 @@ import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import {MesCoursComponent} from './acount/mes-cours/mes-cours.component';
+import {ProfileComponent} from './acount/profile/profile.component';
+import {SettingsComponent} from './acount/settings/settings.component';
+import {UnauthComponent} from "./unauth/unauth.component";
 
 
 
 @NgModule({
     declarations: [
-        HomeComponent,
-        NavbarComponent,
-        FooterComponent,
-        MainComponent,
-        ContactComponent,
+      HomeComponent,
+      NavbarComponent,
+      FooterComponent,
+      MainComponent,
+      ContactComponent,
       CourComponent,
       LoginComponent,
       RegisterComponent,
+      MesCoursComponent,
+      ProfileComponent,
+      SettingsComponent,
+      UnauthComponent
     ],
   exports: [
     FooterComponent,
