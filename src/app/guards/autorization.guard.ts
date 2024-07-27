@@ -26,7 +26,7 @@ export class AuthorizationGuard implements CanActivate {
         console.log('All required roles match');
         return true;
       } else {
-        console.log('No matching role found');
+        this.router.navigateByUrl('/unauth')
         return false;
       }
     } else {

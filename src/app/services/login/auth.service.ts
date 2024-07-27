@@ -14,7 +14,7 @@ export class AuthService {
 
   url = 'http://localhost:8081/projet';
   authenticatedUser!: AppUser;
-
+  refreshToken!: string;
   isAuthenticated: boolean = false;
   roles: string[] = [];
   username: string | null = null;
@@ -65,10 +65,12 @@ export class AuthService {
 
   loadProfile(data: any): void {
     this.accessToken = data['access_token'];
+    this.refreshToken = data['refresh_token']
     if (this.accessToken) {
       const user = this.getUserFromToken(this.accessToken);
       if (user) {
         this.authenticate(user);
+        localStorage.setItem('refresh_token', this.refreshToken);
       } else {
         console.error('Token decoding failed');
       }

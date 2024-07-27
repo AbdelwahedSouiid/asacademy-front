@@ -12,6 +12,7 @@ import {AuthorizationGuard} from "./guards/autorization.guard";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {RegisterComponent} from './pages/website/register/register.component';
+import {UnauthComponent} from './pages/website/unauth/unauth.component';
 
 
 

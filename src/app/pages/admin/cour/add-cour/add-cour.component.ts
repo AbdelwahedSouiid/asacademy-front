@@ -6,6 +6,8 @@ import {Cour} from "../../../../model/cour.model";
 import {Categorie} from "../../../../model/categorie.model";
 import {CategorieService} from "../../../../services/categorie/categorie.service";
 import {error} from "@angular/compiler-cli/src/transformers/util";
+import {Formateur} from "../../../../model/formateur.model";
+import {FormateurService} from "../../../../services/formateur/formateur.service";
 
 @Component({
   selector: 'app-add-cour',
@@ -15,34 +17,51 @@ import {error} from "@angular/compiler-cli/src/transformers/util";
 export class AddCourComponent implements OnInit {
 
   courForm: FormGroup;
-  categories: any[] = [];
+  categories!: Categorie[];
+  formateurs!: Formateur[];
   selectedFile: File | null = null;
   constructor(private fb: FormBuilder,
               private categorieService: CategorieService,
               private courService: CourService,
-              private router: Router) {
+              private router: Router,
+              private formateurService: FormateurService,) {
 
     this.courForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
       duree: ['', Validators.required],
       prix: ['', Validators.required],
-      affiche: ['', Validators.required]
+      affiche: ['', Validators.required],
+      formateurId: ['', Validators.required],
+      categorieId: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
     this.getCategories();
+    this.getFormateurs();
   }
 
   getCategories() {
     this.categorieService.getCategories().subscribe(
       data => {
-        console.log('Categories:', data); // Log the data to verify
+        console.log('Categories:', data);
         this.categories = data;
       },
       error => {
         console.log('No Categories Found', error);
+      }
+    );
+  }
+
+  getFormateurs() {
+    this.formateurService.getFormateurs().subscribe(
+      data => {
+        console.log('Formateurs:', data);
+        this.formateurs = data;
+      },
+      error => {
+        console.log('No Formateurs Found', error);
       }
     );
   }
@@ -52,7 +71,12 @@ export class AddCourComponent implements OnInit {
       return;
     }
 
-    const cour: Cour = this.courForm.value;
+    const cour: Cour = {
+      ...this.courForm.value,
+      categorieId: this.courForm.value.categorieId,
+      formateurId: this.courForm.value.formateurId
+    };
+    console.log(cour);
 
     this.courService.ajouterCour(cour).subscribe(
       response => {
@@ -78,11 +102,10 @@ export class AddCourComponent implements OnInit {
   }
 
 
-  onfileClick(event: Event) {
+  onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
     }
-
   }
 }

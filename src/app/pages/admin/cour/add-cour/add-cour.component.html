@@ -2,7 +2,6 @@
   <div class="container-fluid">
     <form class="form-sample" [formGroup]="courForm" (ngSubmit)="handleAddCour()">
       <div class="row">
-        <!-- Course Information Section -->
         <div class="col-md-6 grid-margin">
           <div class="card">
             <div class="card-body">
@@ -55,35 +54,42 @@
                     </div>
                   </div>
                 </div>
-                <!--div class="col-sm-9">
-                  <select class="form-control" formControlName="categorie">
-                    <option *ngFor="let category of categories" [value]="category.id">
-                      {{ category.nom }}
-                    </option>
-                  </select>
-                  <div *ngIf="courForm.get('categorie')?.invalid && courForm.get('categorie')?.touched"
-                       class="text-danger">
-                    Category is required
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="categorie">Catégorie</label>
+                    <select id="categorie" class="form-control" formControlName="categorieId">
+                      <option *ngFor="let category of categories" [value]="category.id">{{ category.nom }}
+                      </option>
+                    </select>
+                    <div *ngIf="courForm.get('categorieId')?.invalid && courForm.get('categorieId')?.touched"
+                         class="text-danger">
+                      Category is required.
+                    </div>
                   </div>
-                </div -->
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- formation selection-->
-
-
-        <div class="col-md-6 grid-margin">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">Selectionner l'affiche de formation</h4>
-              <div class="form-group">
-                <label class="col-sm-12 col-form-label">Upload Affiche</label>
-                <input type="file" class="form-control" formControlName="affiche" (change)="onfileClick($event)">
-                <div *ngIf="courForm.get('affiche')?.invalid && courForm.get('affiche')?.touched"
-                     class="text-danger">
-                  Affiche is required.
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="formateur">Formateur</label>
+                    <select id="formateur" class="form-control" formControlName="formateurId">
+                      <option *ngFor="let formateur of formateurs" [value]="formateur.id">{{ formateur.nom }}
+                      </option>
+                    </select>
+                    <div *ngIf="courForm.get('formateurId')?.invalid && courForm.get('formateurId')?.touched"
+                         class="text-danger">
+                      Formateur is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="affiche">Upload Affiche</label>
+                    <input id="affiche" type="file" class="form-control" formControlName="affiche"
+                           (change)="onFileSelected($event)">
+                    <div *ngIf="courForm.get('affiche')?.invalid && courForm.get('affiche')?.touched"
+                         class="text-danger">
+                      Affiche is required.
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="text-right">
@@ -92,7 +98,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </form>
   </div>

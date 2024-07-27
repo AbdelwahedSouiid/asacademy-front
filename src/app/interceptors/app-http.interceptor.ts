@@ -7,9 +7,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const authUser = localStorage.getItem('authUser');
-    const token = authUser ? JSON.parse(authUser).jwt : null;
-    console.log(token);
 
+    const token = authUser ? JSON.parse(authUser).jwt : null;
+    const refreshToken = authUser ? JSON.parse(authUser).refreshToken : null;
     if (token && !req.url.includes('/projet/login')) {
       const clonedReq = req.clone({
         headers: req.headers.set('Authorization', `Bearer ${token}`)
