@@ -3,6 +3,10 @@ import {CourService} from '../../../services/cour/cour.service';
 import {Cour} from "../../../model/cour.model";
 import {CategorieService} from "../../../services/categorie/categorie.service";
 import {Categorie} from "../../../model/categorie.model";
+import {Router} from "@angular/router";
+import {environment} from "../../../../environments/environment";
+import {Video} from "../../../model/video.model";
+import {VideoService} from "../../../services/video/video.service";
 
 declare var $: any; // Declare jQuery
 
@@ -14,15 +18,20 @@ declare var $: any; // Declare jQuery
 export class HomeComponent implements OnInit, AfterViewChecked {
 
   allCourses!: Cour[];
+  allVideos!: Video[];
   allCategories!: Categorie[];
   carouselInitialized = false;
 
-  constructor(protected courService: CourService, private categoryService: CategorieService) {
+  constructor(public courService: CourService,
+              private categoryService: CategorieService,
+              private router: Router,
+              private videoService: VideoService) {
   }
 
   ngOnInit(): void {
     this.getCours();
     this.getCategories();
+    this.getVideos();
   }
 
 
@@ -31,6 +40,17 @@ export class HomeComponent implements OnInit, AfterViewChecked {
       this.initializeCarousel();
       this.carouselInitialized = true;
     }
+  }
+
+  getVideos(): void {
+    this.videoService.getVideos().subscribe(
+      data => {
+        this.allVideos = data;
+        console.log(data);
+      }, error => {
+        console.log(error);
+      }
+    );
   }
 
   private getCategories() {
@@ -86,4 +106,9 @@ export class HomeComponent implements OnInit, AfterViewChecked {
     });
   }
 
+  viewCourseDetail(id: string): void {
+    this.router.navigate(['/cour-detail', id]);
+  }
+
+  protected readonly environment = environment;
 }

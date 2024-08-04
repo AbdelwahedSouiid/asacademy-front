@@ -1,0 +1,18 @@
+.comment-text {
+  max-height: 50px; /* Limite la hauteur du texte */
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.comment-text.expanded {
+  max-height: 200px; /* Hauteur maximale lors de l'expansion */
+}
+
+.show-more {
+  padding: 0;
+  border: none;
+  background: none;
+  color: #007bff;
+  text-decoration: underline;
+}
+

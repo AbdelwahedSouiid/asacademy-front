@@ -1,8 +1,39 @@
+<!--  start Videos   -->
+<div class="container-fluid features mb-5" xmlns="http://www.w3.org/1999/html">
+  <div class="container py-5">
+    <div class="row g-4" *ngFor="let video of allVideos ">
+      <div class="col-md-6 col-lg-6 col-xl-3">
+        <div class="row g-4 align-items-center features-item">
+          <div class="col-4">
+            <div class="rounded-circle position-relative">
+              <div class="overflow-hidden rounded-circle">
+                <video src="{{environment.url+'/load/Video'+video.videoUrl}}" class="img-fluid  w-100" alt=""></video>
+              </div>
+              <span
+                class="rounded-circle border border-2 border-white bg-primary btn-sm-square text-white position-absolute"
+                style="top: 10%; right: -10px;">3</span>
+            </div>
+          </div>
+          <div class="col-8">
+            <div class="features-content d-flex flex-column">
+              <a href="#" class="h6">
+                {{ video.titre }}
+              </a>
+              <p class="text-uppercase mb-2"> {{ video.categorie.nom }}</p>
+
+              <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> {{ video.dateAjout }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Videos  end -->
+<!-- Cour   -->
 <div class="container-fluid latest-news py-5">
   <div class="container">
-    <div class="text-right mb-5">
-      <a href="#" class="link-hover">Consulter Notre Chatbot pour vous aidez à trouver votre besoin</a>
-    </div>
     <h2 class="mb-4">Nos Cours</h2>
     <div class="latest-news-carousel owl-carousel mb-5">
       <!-- Use *ngFor to loop through allCourses array -->
@@ -11,12 +42,12 @@
           <!-- Added padding and border to the div -->
           <div class="image-container">
             <!-- Bind the src attribute to course.videoLink dynamically -->
-            <img class="img-fluid rounded-top" src="{{this.courService.url+'/getPhoto/'+course.affiche}}"
+            <img class="img-fluid rounded-top" src="{{environment.url+'/load/AfficheCour/'+course.affiche}}"
                  alt="{{ course.name }}">
           </div>
           <div class="d-flex flex-column p-3">
             <!-- Display course name dynamically -->
-            <a href="#" class="h5">{{ course.name }}</a>
+            <a (click)="viewCourseDetail(course.id)" class="h5">{{ course.name }}</a>
             <div class="d-flex justify-content-between">
               <!-- Display course description dynamically -->
               <a href="#" class="small text-body">by {{ course.description }}</a>
@@ -24,6 +55,7 @@
               <small class="text-body d-block">
                 <i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024
               </small>
+
             </div>
           </div>
         </div>

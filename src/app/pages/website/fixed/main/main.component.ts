@@ -6,10 +6,11 @@ import {Component, OnInit, Renderer2} from '@angular/core';
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
 })
-export class MainComponent implements  OnInit{
+export class MainComponent implements OnInit {
 
 
-  constructor(private renderer: Renderer2) { }
+  constructor(private renderer: Renderer2) {
+  }
 
   ngOnInit(): void {
     this.loadResources();
@@ -30,13 +31,9 @@ export class MainComponent implements  OnInit{
     // Load JS
     this.loadScript('https://buttons.github.io/buttons.js');
     this.loadScript('https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js');
-    this.loadScript('assets/js/main.js');
-    this.loadScript('assets/admin-template/js/dashboard.js');
-    this.loadScript('vendors/js/vendor.bundle.base.js');
-    this.loadScript('vendors/chart.js/Chart.min.js');
-    this.loadScript('vendors/datatables.net/jquery.dataTables.js');
-    this.loadScript('vendors/datatables.net-bs4/dataTables.bootstrap4.js');
-    this.loadScript('assets/admin-template/js/dataTables.select.min.js');
+    this.loadScript('assets/client-template/js/main.js');
+
+
   }
 
   loadStyle(href: string) {

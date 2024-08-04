@@ -1,5 +1,12 @@
+<!-- Spinner Start -->
+<div id="spinner"
+     class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
+  <div class="spinner-grow text-primary" role="status"></div>
+</div>
+<!-- Spinner End -->
+
 <!-- Navbar start -->
-<div class="container-fluid sticky-top px-0">
+<div class="container-fluid  px-0">
   <div class="container-fluid topbar bg-dark d-none d-lg-block">
     <div class="container px-0">
       <div class="topbar-top d-flex justify-content-between flex-lg-wrap">
@@ -37,6 +44,7 @@
   </div>
 
   <!-- navbar2 -->
+  <!-- Main Navbar -->
   <div class="container-fluid bg-light" id="navbarCollapse">
     <div class="container">
       <nav class="navbar navbar-light navbar-expand-xl">
@@ -44,77 +52,69 @@
                 data-bs-target="#navbarCollapseContent">
           <span class="fa fa-bars text-primary"></span>
         </button>
-        <a href="#" class="navbar-brand">
+        <a href="/home" class="navbar-brand">
           <img src="../../assets/logo.png" class="img-zoomin img-fluid w-50" alt="">
         </a>
 
         <div class="collapse navbar-collapse" id="navbarCollapseContent">
-
-
           <div class="navbar-nav mx-auto border-top">
             <div class="nav-item dropdown">
               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categories</a>
               <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                <a *ngFor="let c of categories " class="dropdown-item">{{ c.nom }}</a>
+                <a *ngFor="let c of categories" class="dropdown-item">{{ c.nom }}</a>
               </div>
             </div>
           </div>
-
-
           <div class="input-group w-50 mx-auto d-flex">
-            <input type="search" class="form-control p-3" height="30"
+            <input type="search" class="form-control p-3"
                    placeholder="Quels compétences souhaitez-vous développer "
                    aria-describedby="search-icon-1">
-            <span id="search-icon-1" class="btn btn-primary  p-3"><i
-              class="fa fa-search text-white"></i></span>
+            <span id="search-icon-1" class="btn btn-primary p-3"><i class="fa fa-search text-white"></i></span>
           </div>
-          <div *ngIf="authService.isAuthenticated" class="btn-group hover-dropdown mx-auto">
-            <a class="btn btn-outline-primary dropdown-toggle " type="button" data-bs-toggle="dropdown"
-               aria-expanded="false">
-              <img src="{{this.authService.url+'/AppUser/getPhoto/'+this.authService.photo}}" alt="Profile Image"
-                   class="profile-image">
-            </a>
-            <ul class="dropdown-menu ">
-              <li><a class="dropdown-item" routerLink="/profile">Profil</a></li>
-              <li><a class="dropdown-item" routerLink="/mescours">Mes Cours</a></li>
-              <li><a class="dropdown-item" routerLink="/settings">Paramètres</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" (click)="logout()">Deconnexion</a></li>
-          </ul>
-        </div>
-          <button *ngIf="!authService.isAuthenticated" class="btn btn-outline-primary ms-3" type="button"
-                  aria-expanded="false" routerLink="/register">
-            S'inscrire
-          </button>
-          <button *ngIf="!authService.isAuthenticated" class="btn btn-outline-primary ms-3" type="button"
-                  aria-expanded="false" routerLink="/login">
-            Connecter
-          </button>
+          <div class="navbar-nav ms-auto">
+            <div class="nav-item dropdown">
+              <a *ngIf="authService.isAuthenticated" href="#" class="nav-link dropdown-toggle"
+                 data-bs-toggle="dropdown">
+                <img src="{{photo}}" alt="{{ username }}" class="profile-image rounded-circle me-2">
+
+              </a>
+              <ul class="dropdown-menu m-0 bg-secondary rounded-0">
+                <li><a class="dropdown-item" routerLink="/profile">Profil</a></li>
+                <li><a class="dropdown-item" routerLink="/mescours">Mes Cours</a></li>
+                <li><a class="dropdown-item" routerLink="/settings">Paramètres</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" (click)="logout()">Déconnexion</a></li>
+              </ul>
+            </div>
+            <button *ngIf="!authService.isAuthenticated" class="btn btn-outline-primary ms-3" routerLink="/register">
+              S'inscrire
+            </button>
+            <button *ngIf="!authService.isAuthenticated" class="btn btn-outline-primary ms-3" routerLink="/login">
+              Connecter
+            </button>
+          </div>
         </div>
       </nav>
     </div>
   </div>
-  <!-- navbar2 -->
 
-
-  <!-- navbar3 -->
+  <!-- Additional Navbar for Authenticated Users -->
   <div *ngIf="authService.isAuthenticated" class="container-fluid bg-light">
     <div class="container">
       <nav class="navbar navbar-light navbar-expand-xl">
-        <div class=" navbar-collapse bg-light">
+        <div class="navbar-collapse bg-light">
           <div class="navbar-nav border-top">
             <a routerLink="/home" class="nav-item nav-link active">Accueil</a>
             <a routerLink="/mescours" class="nav-item nav-link">Mes Cours</a>
-            <a class="nav-item nav-link">Favoris</a>
+            <a routerLink="/videos" class="nav-item nav-link">Videos</a>
             <a class="nav-item nav-link">Contact</a>
           </div>
         </div>
       </nav>
     </div>
   </div>
-  <!-- navbar3 -->
-
 </div>
+
 <!-- Navbar End -->

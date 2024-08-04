@@ -32,13 +32,20 @@ export class LoginComponent implements OnInit {
       next: data => {
         this.authService.loadProfile(data);
         if (this.authService.roles.includes("USER")) {
-          this.router.navigateByUrl('/home');
+          // Après authentification réussie
+          const redirectUrl = localStorage.getItem('redirectUrl');
+          if (redirectUrl) {
+            localStorage.removeItem('redirectUrl');
+            this.router.navigateByUrl(redirectUrl);
+          } else {
+            this.router.navigateByUrl('/home');
+          }
         } else {
           this.router.navigateByUrl('/admin');
         }
       },
       error: err => {
-        this.errorMessage = err.message;  // Afficher l'erreur
+        this.errorMessage = err.message;
       }
     });
   }

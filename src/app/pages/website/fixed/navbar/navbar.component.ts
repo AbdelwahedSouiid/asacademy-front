@@ -3,6 +3,7 @@ import {AuthService} from "../../../../services/login/auth.service";
 import {Router} from "@angular/router";
 import {CategorieService} from "../../../../services/categorie/categorie.service";
 import {Categorie} from "../../../../model/categorie.model";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-navbar',
@@ -11,8 +12,8 @@ import {Categorie} from "../../../../model/categorie.model";
 })
 export class NavbarComponent implements OnInit {
 
-  url: string = 'http://localhost:8081/projet/categorie';
-
+  photo!: string;
+  username!: string | null;
   categories: Categorie[] = [];
 
   constructor(public authService: AuthService,
@@ -22,6 +23,12 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCategories();
+    this.getProfile();
+  }
+
+  getProfile() {
+    this.photo = `${environment.url}/load/PhotoUser/${this.authService.photo}`
+    this.username = this.authService.username;
   }
 
   logout(): void {
