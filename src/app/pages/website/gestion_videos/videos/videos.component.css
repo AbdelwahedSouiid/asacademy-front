@@ -1,0 +1,15 @@
+/* Style pour le conteneur du champ de recherche */
+.input-group {
+  max-width: 600px; /* Limite la largeur du champ de recherche */
+  margin: 0 auto; /* Centre le champ de recherche horizontalement */
+}
+
+/* Style pour le champ de recherche */
+.form-control {
+  border-radius: 0.25rem; /* Arrondit les coins du champ de recherche */
+}
+
+/* Style pour le bouton de recherche */
+.btn-primary {
+  border-radius: 0.25rem; /* Arrondit les coins du bouton */
+}

@@ -1,0 +1,39 @@
+<!--div class="col-md-6 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Edit User Form</h4>
+      <form class="forms-sample" [formGroup]="userForm" (ngSubmit)="handleUpdateUser()">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" formControlName="email" id="email" placeholder="Email">
+          <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="text-danger">
+            Email is required.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" formControlName="username" id="username" placeholder="Username">
+          <div *ngIf="userForm.get('username')?.invalid && userForm.get('username')?.touched" class="text-danger">
+            Username is required.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password">
+        </div>
+        <div class="form-group">
+          <label for="roles">Roles</label>
+          <select id="roles" class="form-control" formControlName="roles" multiple>
+            <option *ngFor="let role of availableRoles" [value]="role">{{ role }}</option>
+          </select>
+          <div *ngIf="userForm.get('roles')?.invalid && userForm.get('roles')?.touched" class="text-danger">
+            At least one role is required.
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+-->

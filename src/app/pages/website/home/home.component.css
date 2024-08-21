@@ -1,0 +1,5 @@
+.video-element {
+  width: 100%; /* Ensure the video takes the full width of the carousel item */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Cover the area without distortion */
+}

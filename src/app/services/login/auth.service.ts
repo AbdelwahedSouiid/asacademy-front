@@ -1,10 +1,11 @@
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable, of, throwError} from 'rxjs';
+import {Observable, of, switchMap, throwError} from 'rxjs';
 import {Router} from '@angular/router';
 import {AppUser} from '../../model/user.model';
 import {catchError} from 'rxjs/operators';
 import {jwtDecode} from "jwt-decode";
+import {environment} from "../../../environments/environment";
 
 
 @Injectable({
@@ -12,7 +13,7 @@ import {jwtDecode} from "jwt-decode";
 })
 export class AuthService {
 
-  url = 'http://localhost:8081/projet';
+  url = environment.url;
   authenticatedUser!: AppUser;
   refreshToken!: string;
   isAuthenticated: boolean = false;
@@ -25,11 +26,12 @@ export class AuthService {
     this.initializer();
   }
 
-  login(username: string, password: string): Observable<any> {
+  login(username: string, password: string, checkbox: boolean): Observable<any> {
     const headers = new HttpHeaders().set("Content-Type", "application/x-www-form-urlencoded");
     const body = new HttpParams()
       .set('username', username)
       .set('password', password)
+      .set('withRefreshToken', checkbox)
       .toString();
 
     return this.http.post<any>(this.url + "/login", body, {headers})
@@ -37,6 +39,7 @@ export class AuthService {
         catchError(this.handleError)
       );
   }
+
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unknown error occurred!';
@@ -114,8 +117,45 @@ export class AuthService {
 
   clearToken(): void {
     localStorage.removeItem('authUser');
+    localStorage.removeItem('refresh_token');
     this.isAuthenticated = false;
-
   }
+
+  refreshAccessToken(): Observable<any> {
+    const refreshToken = this.refreshToken || localStorage.getItem('refresh_token');
+    if (!refreshToken) {
+      this.logout();
+      return throwError('No refresh token available');
+    }
+
+    const headers = new HttpHeaders().set("Content-Type", "application/x-www-form-urlencoded");
+    const body = new HttpParams()
+      .set('refreshToken', refreshToken)
+      .toString();
+
+    return this.http.post<any>(this.url + "/refreshToken", body, {headers}).pipe(
+      switchMap((data) => {
+        this.accessToken = data['access_token'];
+        this.refreshToken = data['refresh_token'];
+        if (this.accessToken) {
+          localStorage.setItem('authUser', JSON.stringify({
+            username: this.username,
+            roles: this.roles,
+            photo: this.photo,
+            jwt: this.accessToken
+          }));
+          localStorage.setItem('refresh_token', this.refreshToken);
+          return of(data);
+        } else {
+          return throwError('Access token refresh failed');
+        }
+      }),
+      catchError((error) => {
+        this.logout();
+        return throwError(error);
+      })
+    );
+  }
+
 
 }

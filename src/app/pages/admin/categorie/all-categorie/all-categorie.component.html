@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <p class="card-title mb-0">Catégories</p>
+        <div class="d-flex align-items-center">
+          <div class="form-group mb-0 mr-2">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Rechercher Catégorie"
+                     aria-label="Rechercher Catégorie">
+              <div class="input-group-append">
+                <button class="btn btn-sm btn-primary" type="button">Rechercher</button>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary" routerLink="/categories/add">Ajouter Catégorie</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Description</th>
+              <th>Image</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let categorie of categories">
+              <td>{{ categorie.nom }}</td>
+              <td>{{ categorie.description }}</td>
+              <td><img [src]="categorie.image" alt="{{ categorie.nom }}" width="50"></td>
+              <td>
+                <button class="btn btn-sm btn-warning" [routerLink]="['/categories/edit', categorie.id]">Edit</button>
+              </td>
+              <td>
+                <button class="btn btn-sm btn-info" [routerLink]="['/admin/blogs/Blog-detail', categorie.id]">Detail
+                </button>
+              </td>
+              <td>
+                <button class="btn btn-sm btn-danger" (click)="onDelete(categorie.id)">Delete</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

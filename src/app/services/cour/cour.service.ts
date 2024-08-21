@@ -1,39 +1,57 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpEvent, HttpHeaders, HttpRequest} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Cour} from "../../model/cour.model";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  url = "http://localhost:8081/projet/cour";
+  url = environment.url + "/cour";
 
   getCours(): Observable<any> {
-  const headers = new HttpHeaders().set( "Content-Type", "application/json");
+    const headers = new HttpHeaders().set("Content-Type", "application/json");
     return this.http.get(this.url + "/retrieve-all-Cours", {headers});
   }
 
   ajouterCour(cour: Cour): Observable<any> {
 
-    const headers = new HttpHeaders().set( "Content-Type", "application/json");
+    const headers = new HttpHeaders().set("Content-Type", "application/json");
 
     return this.http.post(this.url + "/add-Cour", cour, {headers});
+  }
+
+  detail(id: string): Observable<any> {
+    return this.http.get(`${this.url}/retrieve-Cour/${id}`);
+  }
+
+  delete(id: string): Observable<any> {
+    return this.http.delete(`${this.url}/remove-Cour/${id}`);
+  }
+
+  update(cour: Cour): Observable<any> {
+    return this.http.put(`${this.url}/modify-Cour`, cour);
   }
 
   uploadImage(file: File, id: string): Observable<HttpEvent<{}>> {
     let formData = new FormData();
     formData.append('file', file);
 
-    const request = new HttpRequest('POST', this.url + '/uploadAffiche/' + id, formData, {
+    const request = new HttpRequest('POST', environment.url + '/upload/AfficheCour/' + id, formData, {
       reportProgress: true,
       responseType: 'text'
     });
     return this.http.request(request);
   }
 
+  getCoursByCategorie(categorieID: string): Observable<Cour[]> {
+    const headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.http.get<Cour[]>(this.url + "/search-By-categorie/" + categorieID, {headers});
+  }
 
 }

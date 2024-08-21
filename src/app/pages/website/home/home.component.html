@@ -1,40 +1,57 @@
 <!--  start Videos   -->
-<div class="container-fluid features mb-5" xmlns="http://www.w3.org/1999/html">
+<div class="container-fluid features mb-5">
   <div class="container py-5">
-    <div class="row g-4" *ngFor="let video of allVideos ">
-      <div class="col-md-6 col-lg-6 col-xl-3">
-        <div class="row g-4 align-items-center features-item">
-          <div class="col-4">
-            <div class="rounded-circle position-relative">
-              <div class="overflow-hidden rounded-circle">
-                <video src="{{environment.url+'/load/Video'+video.videoUrl}}" class="img-fluid  w-100" alt=""></video>
-              </div>
-              <span
-                class="rounded-circle border border-2 border-white bg-primary btn-sm-square text-white position-absolute"
-                style="top: 10%; right: -10px;">3</span>
-            </div>
+    <div class="owl-carousel video-carousel">
+      <!-- Use *ngFor to loop through the allVideos array -->
+      <div class="item" *ngFor="let video of allVideos">
+        <div class="overflow-hidden rounded">
+          <video src="{{environment.url+'/load/video/'+video.videoUrl}}" class="video-element"
+                 [routerLink]="['/watch', video.id]"></video>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  end Videos   -->
+<!-- Blogs start -->
+<div class="container-fluid mb-5">
+  <div class="container py-4">
+    <h2 class="mb-4">Voir les Articles</h2>
+    <div class="owl-carousel blog-carousel">
+      <!-- Use *ngFor to loop through the allBlogs array -->
+      <div class="item" *ngFor="let blog of allBlogs">
+        <div class="bg-light p-4 rounded">
+          <div class="news-2">
+            <h3 class="mb-4">Top Story</h3>
           </div>
-          <div class="col-8">
-            <div class="features-content d-flex flex-column">
-              <a href="#" class="h6">
-                {{ video.titre }}
-              </a>
-              <p class="text-uppercase mb-2"> {{ video.categorie.nom }}</p>
-
-              <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> {{ video.dateAjout }}</small>
+          <div class="row g-4 align-items-center">
+            <div class="col-md-6">
+              <div class="rounded overflow-hidden">
+                <img src="../../assets/client-template/img/news-2.jpg" class="img-fluid rounded img-zoomin w-100"
+                     alt="">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex flex-column">
+                <a href="#" class="h3">{{ blog.content }}</a>
+                <p class="mb-0 fs-5"><i class="fa fa-clock"> 06 minute read</i></p>
+                <p class="mb-0 fs-5"><i class="fa fa-eye"> 3.5k Views</i></p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
+      <!-- Repeat the above block for each blog post -->
     </div>
   </div>
 </div>
-<!-- Videos  end -->
-<!-- Cour   -->
+<!-- Blogs end -->
+
+
 <div class="container-fluid latest-news py-5">
   <div class="container">
-    <h2 class="mb-4">Nos Cours</h2>
+    <!-- Cour start  -->
+    <h2 class="mb-4">Voir Nos Cours</h2>
     <div class="latest-news-carousel owl-carousel mb-5">
       <!-- Use *ngFor to loop through allCourses array -->
       <div class="latest-news-item img-zoomin hover-effect" *ngFor="let course of allCourses">
@@ -47,7 +64,8 @@
           </div>
           <div class="d-flex flex-column p-3">
             <!-- Display course name dynamically -->
-            <a (click)="viewCourseDetail(course.id)" class="h5">{{ course.name }}</a>
+            <a [routerLink]="['/cour-detail', course.id]"
+               class="h5">{{ course.name }}</a>
             <div class="d-flex justify-content-between">
               <!-- Display course description dynamically -->
               <a href="#" class="small text-body">by {{ course.description }}</a>
@@ -61,14 +79,9 @@
         </div>
       </div>
     </div>
-    <div class="py-5">
-      <h2 class="mb-4">Blogs</h2>
-      <ul class="d-inline-flex list-unstyled p-0">
-        <li class="nav-item mb-3 me-3">
-          <a href="#" class="btn btn-primary btn-lg">Blog 1 </a>
-        </li>
-      </ul>
-    </div>
+    <!-- Cours End -->
+
+    <!-- Categories start-->
     <div class="py-5">
       <h2 class="mb-4">Nos Categories</h2>
       <ul class="d-inline-flex list-unstyled p-0">
@@ -77,6 +90,7 @@
         </li>
       </ul>
     </div>
+    <!-- Categories end-->
   </div>
 </div>
 <!-- Latest News End -->

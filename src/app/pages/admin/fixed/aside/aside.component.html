@@ -1,90 +1,208 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav">
     <li class="nav-item">
-      <a class="nav-link" href="index.html">
+      <a class="nav-link" href="javascript:void(0)" (click)="navigateTo('/admin')">
         <i class="icon-grid menu-icon"></i>
         <span class="menu-title">Tableau de Bord</span>
       </a>
     </li>
+
     <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+      <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#users" aria-expanded="false" aria-controls="users">
         <i class="icon-head menu-icon"></i>
         <span class="menu-title">Utilisateurs</span>
         <i class="menu-arrow"></i>
       </a>
-      <div class="collapse" id="ui-basic">
+      <div class="collapse" id="users">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Gérer Utilisateurs</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Rôles & Permissions</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" (click)="navigateTo( '/admin/users/all-Users')">Gérer
+              Utilisateurs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" (click)="navigateTo( '/admin/users/roles-permissions')">Rôles
+              & Permissions</a>
+          </li>
         </ul>
       </div>
     </li>
+
+
     <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#courses" aria-expanded="false" aria-controls="courses">
+      <a class="nav-link" data-bs-toggle="collapse" href="#courses" aria-expanded="false" aria-controls="courses">
         <i class="icon-columns menu-icon"></i>
         <span class="menu-title">Cours</span>
         <i class="menu-arrow"></i>
       </a>
       <div class="collapse" id="courses">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" >Gérer Cours</a></li>
-          <li class="nav-item"><a class="nav-link" routerLink="/admin/ajouterCour">Créer Cours</a></li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="navigateTo('/admin/cours/all-Cours')">Gérer Cours</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="navigateTo('/admin/cours/add-Cour')">Créer Cours</a>
+          </li>
         </ul>
       </div>
     </li>
+
     <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#enrollments" aria-expanded="false" aria-controls="enrollments">
+      <a class="nav-link" data-bs-toggle="collapse" href="#enrollments" aria-expanded="false"
+         aria-controls="enrollments">
         <i class="icon-bar-graph menu-icon"></i>
         <span class="menu-title">Inscriptions</span>
         <i class="menu-arrow"></i>
       </a>
       <div class="collapse" id="enrollments">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/enrollments/manage_enrollments.html">Gérer Inscriptions</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" (click)="navigateTo('/admin/inscriptions')">Gérer
+              Inscriptions</a>
+          </li>
         </ul>
       </div>
     </li>
+
     <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#categories" aria-expanded="false" aria-controls="categories">
+      <a class="nav-link" data-bs-toggle="collapse" href="#categories" aria-expanded="false" aria-controls="categories">
         <i class="icon-grid-2 menu-icon"></i>
         <span class="menu-title">Catégories</span>
         <i class="menu-arrow"></i>
       </a>
       <div class="collapse" id="categories">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link">Gérer Catégories</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" (click)="navigateTo('/admin/categories/all-Categories')">Gérer
+              Catégories</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" (click)="navigateTo('/admin/categories/add-Categorie')">Ajouter
+              Catégorie</a>
+          </li>
         </ul>
+      </div>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#formateurs" aria-expanded="false" aria-controls="formateurs">
+        <i class="icon-person menu-icon"></i>
+        <span class="menu-title">Formateurs</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="formateurs">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" routerLink="/admin/ajouterCategorie">Ajouter Catégorie</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" (click)="navigateTo('/admin/formateurs/all-Formateurs')">Gérer
+              Formateurs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" (click)="navigateTo('/admin/formateurs/add-Formateur')">Ajouter
+              Formateur</a>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#blogs" aria-expanded="false" aria-controls="blogs">
+        <i class="icon-book menu-icon"></i>
+        <span class="menu-title">Blogs</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="blogs">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" (click)="navigateTo('/admin/blogs/all-Blogs')">Gérer Blogs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" (click)="navigateTo('/admin/blogs/add-Blog')">Ajouter Blog</a>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#avis" aria-expanded="false" aria-controls="avis">
+        <i class="icon-star menu-icon"></i>
+        <span class="menu-title">Avis</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="avis">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" (click)="navigateTo('/admin/avis/all-Avis')">Gérer Avis</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" (click)="navigateTo('/admin/avis/add-Avis')">Ajouter Avis</a>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#tags" aria-expanded="false" aria-controls="tags">
+        <i class="icon-tag menu-icon"></i>
+        <span class="menu-title">Tags</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="tags">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" (click)="navigateTo('/admin/tags/all-Tags')">Gérer Tags</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" (click)="navigateTo('/admin/tags/add-Tag')">Ajouter Tag</a>
+          </li>
         </ul>
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="pages/statistics/statistics.html">
+      <a class="nav-link" data-bs-toggle="collapse" href="#videos" aria-expanded="false" aria-controls="videos">
+        <i class="icon-video menu-icon"></i>
+        <span class="menu-title">Vidéos</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="videos">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" (click)="navigateTo('/admin/videos/all-Videos')">Gérer
+              Vidéos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" (click)="navigateTo('/admin/videos/add-Video')">Ajouter
+              Vidéo</a>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+
+    <li class="nav-item">
+      <a class="nav-link" href="javascript:void(0)" (click)="navigateTo('/admin/statistics')">
         <i class="icon-bar-chart menu-icon"></i>
         <span class="menu-title">Statistiques</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="pages/payments/payments.html">
+      <a class="nav-link" href="javascript:void(0)" (click)="navigateTo('/admin/payments')">
         <i class="icon-wallet menu-icon"></i>
         <span class="menu-title">Paiements</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="pages/settings/settings.html">
+      <a class="nav-link" href="javascript:void(0)" (click)="navigateTo('/admin/settings')">
         <i class="icon-settings menu-icon"></i>
         <span class="menu-title">Paramètres</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="pages/support/support.html">
+      <a class="nav-link" href="javascript:void(0)" (click)="navigateTo('/admin/support')">
         <i class="icon-support menu-icon"></i>
         <span class="menu-title">Support</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="pages/logout.html">
+      <a class="nav-link" href="javascript:void(0)" (click)="navigateTo('/admin/logout')">
         <i class="icon-logout menu-icon"></i>
         <span class="menu-title">Déconnexion</span>
       </a>

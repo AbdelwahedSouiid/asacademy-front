@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <p class="card-title mb-0">All blogs</p>
+        <div class="d-flex align-items-center">
+          <div class="form-group mb-0 mr-2">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Rechercher Blog" aria-label="Rechercher Blog">
+              <div class="input-group-append">
+                <button class="btn btn-sm btn-primary" type="button">Search</button>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" routerLink="/admin/blogs/add-Blog">Ajouter un Blog</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table id="example" class="display expandable-table dataTable no-footer" style="width: 100%;" role="grid">
+            <thead>
+            <tr role="row">
+              <th>Title</th>
+              <th>Content</th>
+              <th>Cour</th>
+
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let Blog of listBlogs">
+              <td>{{ Blog.title }}</td>
+              <td>{{ Blog.content }}</td>
+              <td>{{ Blog.cour.name }}</td>
+
+              <td>
+                <button class="btn btn-sm btn-warning" [routerLink]="['/admin/blogs/edit-Blog', Blog.id]">Edit</button>
+              </td>
+              <td>
+                <button class="btn btn-sm btn-info" [routerLink]="['/admin/blogs/Blog-detail', Blog.id]">Detail
+                </button>
+              </td>
+              <td>
+                <button class="btn btn-sm btn-danger" (click)="onDelete(Blog)">Delete</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

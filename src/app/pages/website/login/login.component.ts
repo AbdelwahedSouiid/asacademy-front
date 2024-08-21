@@ -15,8 +15,9 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private renderer: Renderer2) {
     this.formLogin = this.fb.group({
-      username: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+      checkbox: [true],
     });
   }
 
@@ -25,10 +26,12 @@ export class LoginComponent implements OnInit {
   }
 
   handleLogin(): void {
-    const username = this.formLogin.value.username;
+    const username = this.formLogin.value.email;
     const password = this.formLogin.value.password;
+    const checkboxValue = this.formLogin.value.checkbox;
 
-    this.authService.login(username, password).subscribe({
+    console.log('Checkbox Value:', checkboxValue);
+    this.authService.login(username, password, checkboxValue).subscribe({
       next: data => {
         this.authService.loadProfile(data);
         if (this.authService.roles.includes("USER")) {

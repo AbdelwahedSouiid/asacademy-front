@@ -5,8 +5,9 @@
 </div>
 <!-- Spinner End -->
 
-<!-- Navbar start -->
+
 <div class="container-fluid  px-0">
+  <!-- Navbar1 start -->
   <div class="container-fluid topbar bg-dark d-none d-lg-block">
     <div class="container px-0">
       <div class="topbar-top d-flex justify-content-between flex-lg-wrap">
@@ -42,43 +43,165 @@
       </div>
     </div>
   </div>
+  <!-- navbar1 end -->
 
-  <!-- navbar2 -->
+
   <!-- Main Navbar -->
-  <div class="container-fluid bg-light" id="navbarCollapse">
+  <div class="container-fluid bg-light">
     <div class="container">
       <nav class="navbar navbar-light navbar-expand-xl">
-        <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarCollapseContent">
-          <span class="fa fa-bars text-primary"></span>
-        </button>
-        <a href="/home" class="navbar-brand">
-          <img src="../../assets/logo.png" class="img-zoomin img-fluid w-50" alt="">
-        </a>
 
-        <div class="collapse navbar-collapse" id="navbarCollapseContent">
-          <div class="navbar-nav mx-auto border-top">
-            <div class="nav-item dropdown">
+        <!-- Navbar for Large Screens -->
+        <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarLargeScreen">
+          <!-- Logo -->
+          <a href="/home" class="navbar-brand">
+            <img src="../../assets/logo2.png" class="img-zoomin img-fluid logo-size" alt="Logo">
+          </a>
+
+          <!-- Navigation Links -->
+          <ul class="navbar-nav mx-auto collapse navbar-collapse">
+            <li class="nav-item dropdown">
               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categories</a>
-              <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                <a *ngFor="let c of categories" class="dropdown-item">{{ c.nom }}</a>
+              <ul class="dropdown-menu">
+                <li *ngFor="let c of categories">
+                  <a class="dropdown-item">{{ c.nom }}</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+          <ul class="navbar-nav mx-auto">
+            <!-- Search Form -->
+            <div class="box">
+              <form name="search">
+                <input type="text" class="input" name="txt" onmouseout="this.value = ''; this.blur();">
+              </form>
+              <i class="fas fa-search"></i>
+            </div>
+            <!-- Additional Nav Links -->
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/courses']">All Courses</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/about']">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/contact']">Contact</a>
+            </li>
+
+            <div *ngIf="authService.isAuthenticated" class="navbar-nav ms-auto">
+              <div class="cart">
+                <a href="#" class="nav-link">
+                  <i class="fas fa-shopping-cart"></i> Cart (0)
+                </a>
+              </div>
+
+              <div class="nav-item dropdown">
+                <a class="d-flex align-items-center me-2" href="#">
+                  <img src="{{ environment.url + '/load/PhotoUser/' + this.authService.photo }}"
+                       alt="{{ this.authService.username }}"
+                       class="profile-image rounded-circle me-2">
+                </a>
+                <ul class="dropdown-menu m-0 bg-secondary rounded-0">
+                  <li><a class="dropdown-item" routerLink="/profile">Profil</a></li>
+                  <li><a class="dropdown-item" routerLink="/mescours">Mes Cours</a></li>
+                  <li><a class="dropdown-item" routerLink="/settings">Paramètres</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" (click)="logout()">Déconnexion</a></li>
+                </ul>
+              </div>
+              <div class="nav-item ms-auto">
+                <a href="#" class="nav-link position-relative">
+                  <i class="fas fa-bell"></i>
+                  <span
+                    class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+                </a>
               </div>
             </div>
-          </div>
-          <div class="input-group w-50 mx-auto d-flex">
-            <input type="search" class="form-control p-3"
-                   placeholder="Quels compétences souhaitez-vous développer "
-                   aria-describedby="search-icon-1">
-            <span id="search-icon-1" class="btn btn-primary p-3"><i class="fa fa-search text-white"></i></span>
-          </div>
-          <div class="navbar-nav ms-auto">
-            <div class="nav-item dropdown">
-              <a *ngIf="authService.isAuthenticated" href="#" class="nav-link dropdown-toggle"
-                 data-bs-toggle="dropdown">
-                <img src="{{photo}}" alt="{{ username }}" class="profile-image rounded-circle me-2">
+            <button *ngIf="!authService.isAuthenticated" class="btn btn-outline-primary ms-3" routerLink="/register">
+              S'inscrire
+            </button>
+            <button *ngIf="!authService.isAuthenticated" class="btn btn-outline-primary ms-3" routerLink="/login">
+              Connecter
+            </button>
+          </ul>
 
-              </a>
-              <ul class="dropdown-menu m-0 bg-secondary rounded-0">
+
+          <!-- User Profile and Cart -->
+
+          <!-- user profile -->
+        </div>
+
+        <!-- Navbar for Small Screens -->
+        <div class="d-lg-none">
+          <div class="d-flex justify-content-between align-items-center ">
+            <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar">
+              <span class="fa fa-bars text-primary"></span>
+            </button>
+            <a href="/home" class="navbar-brand mx-auto">
+              <img src="../../assets/logo2.png" class="img-zoomin img-fluid logo-size" alt="">
+            </a>
+
+            <div class="box">
+              <form name="search">
+                <input type="text" class="input" name="txt" onmouseout="this.value = ''; this.blur();">
+              </form>
+              <i class="fas fa-search"></i>
+            </div>
+          </div>
+
+          <div class="offcanvas offcanvas-start p-3" tabindex="-1" id="offcanvasNavbar"
+               aria-labelledby="offcanvasNavbarLabel">
+
+            <!-- Offcanvas Header -->
+            <div class="offcanvas-header d-flex justify-content-between align-items-center">
+
+              <!-- User Info Section -->
+              <div *ngIf="authService.isAuthenticated" class="d-flex align-items-center">
+                <a class="d-flex align-items-center me-2">
+                  <img src="{{ environment.url + '/load/PhotoUser/' + this.authService.photo }}"
+                       alt="{{ this.authService.username }}"
+                       class="profile-image rounded-circle me-2">
+                </a>
+                <h5 class="mb-0">{{ this.authService.username }}</h5>
+              </div>
+
+              <button *ngIf="!authService.isAuthenticated" class="btn btn-outline-primary ms-3" routerLink="/register">
+                S'inscrire
+              </button>
+              <button *ngIf="!authService.isAuthenticated" class="btn btn-outline-primary ms-3" routerLink="/login">
+                Connecter
+              </button>
+
+              <!-- Close Button -->
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+
+            </div>
+
+            <!-- Offcanvas Body -->
+            <div class="offcanvas-body">
+
+              <ul class="navbar-nav">
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <!-- Categories Dropdown -->
+                <li>
+                  <a class="dropdown-toggle dropdown-item" role="button" data-bs-toggle="dropdown"
+                     aria-expanded="false">
+                    Categories
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a *ngFor="let c of categories" class="dropdown-item"
+                           [routerLink]="['/cours', c.nom]">{{ c.nom }}</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <ul class="navbar-nav" *ngIf="authService.isAuthenticated">
+                <!-- User Info Links (Repeated for Offcanvas Body) -->
                 <li><a class="dropdown-item" routerLink="/profile">Profil</a></li>
                 <li><a class="dropdown-item" routerLink="/mescours">Mes Cours</a></li>
                 <li><a class="dropdown-item" routerLink="/settings">Paramètres</a></li>
@@ -87,34 +210,36 @@
                 </li>
                 <li><a class="dropdown-item" (click)="logout()">Déconnexion</a></li>
               </ul>
+
             </div>
-            <button *ngIf="!authService.isAuthenticated" class="btn btn-outline-primary ms-3" routerLink="/register">
-              S'inscrire
-            </button>
-            <button *ngIf="!authService.isAuthenticated" class="btn btn-outline-primary ms-3" routerLink="/login">
-              Connecter
-            </button>
+
           </div>
+
         </div>
+
       </nav>
     </div>
   </div>
+  <!-- Main Navbar -->
 
-  <!-- Additional Navbar for Authenticated Users -->
-  <div *ngIf="authService.isAuthenticated" class="container-fluid bg-light">
+  <!-- Separator Line -->
+  <hr class="my-0 border-secondary"/>
+  <!-- navbar 3 -->
+  <div class="container-fluid bg-light ">
     <div class="container">
-      <nav class="navbar navbar-light navbar-expand-xl">
+      <nav class="navbar navbar-light navbar-expand">
         <div class="navbar-collapse bg-light">
-          <div class="navbar-nav border-top">
-            <a routerLink="/home" class="nav-item nav-link active">Accueil</a>
-            <a routerLink="/mescours" class="nav-item nav-link">Mes Cours</a>
-            <a routerLink="/videos" class="nav-item nav-link">Videos</a>
-            <a class="nav-item nav-link">Contact</a>
+          <div class="navbar-nav border-topw">
+            <a [routerLink]="'/home'" [class.active]="activeLink === '/home'" class="nav-item nav-link">Accueil</a>
+            <a [routerLink]="'/videos'" [class.active]="activeLink === '/videos'" class="nav-item nav-link">Videos</a>
+            <a [routerLink]="'/articles'" [class.active]="activeLink === '/articles'"
+               class="nav-item nav-link">Articles</a>
+            <a *ngIf="authService.isAuthenticated" [routerLink]="'/mescours'"
+               [class.active]="activeLink === '/mescours'" class="nav-item nav-link">Mes Cours</a>
           </div>
         </div>
       </nav>
     </div>
   </div>
+  <!-- navbar 3 -->
 </div>
-
-<!-- Navbar End -->

@@ -20,6 +20,7 @@ export class AddCourComponent implements OnInit {
   categories!: Categorie[];
   formateurs!: Formateur[];
   selectedFile: File | null = null;
+
   constructor(private fb: FormBuilder,
               private categorieService: CategorieService,
               private courService: CourService,
@@ -32,8 +33,8 @@ export class AddCourComponent implements OnInit {
       duree: ['', Validators.required],
       prix: ['', Validators.required],
       affiche: ['', Validators.required],
-      formateurId: ['', Validators.required],
-      categorieId: ['', Validators.required],
+      categorie: ['', Validators.required],
+      formateur: ['', Validators.required],
     });
   }
 
@@ -71,10 +72,21 @@ export class AddCourComponent implements OnInit {
       return;
     }
 
+    // Trouver la catégorie et le formateur sélectionnés
+    const selectedCategorie = this.categories.find(c => c.id === this.courForm.value.categorie);
+    const selectedFormateur = this.formateurs.find(f => f.id === this.courForm.value.formateur);
+
+    // Assurer que les objets sont trouvés
+    if (!selectedCategorie || !selectedFormateur) {
+      console.error('Categorie or Formateur not found');
+      return;
+    }
+
     const cour: Cour = {
       ...this.courForm.value,
-      categorieId: this.courForm.value.categorieId,
-      formateurId: this.courForm.value.formateurId
+      categorie: selectedCategorie,
+      formateur: selectedFormateur,
+      // Assurez-vous que les autres champs correspondent au modèle Cour
     };
     console.log(cour);
 
@@ -85,7 +97,7 @@ export class AddCourComponent implements OnInit {
           this.courService.uploadImage(this.selectedFile, response.id).subscribe({
             next: () => {
               console.log('Image uploaded successfully');
-              this.router.navigateByUrl('/admin');
+              this.router.navigateByUrl('/admin/cours/all-Cours');
             },
             error: err => {
               console.error('Image upload failed', err);

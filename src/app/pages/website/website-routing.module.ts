@@ -12,6 +12,9 @@ import {SettingsComponent} from "./acount/settings/settings.component";
 import {UnauthComponent} from "./unauth/unauth.component";
 import {CourDetailComponent} from "../website/gestion_cour/cour-detail/cour-detail.component";
 import {VideosComponent} from "./gestion_videos/videos/videos.component";
+import {WatchComponent} from "./gestion_videos/watch/watch.component";
+import {CoursComponent} from "./gestion_cour/cours/cours.component";
+import {ArticlesComponent} from "./gestion_article/articles/articles.component";
 
 
 const routes: Routes = [
@@ -29,6 +32,9 @@ const routes: Routes = [
       {path: 'unauth', component: UnauthComponent},
       {path: 'cour-detail/:id', component: CourDetailComponent},
       {path: 'videos', component: VideosComponent},
+      {path: 'watch/:id', component: WatchComponent},
+      {path: 'cours/:categorieNom', component: CoursComponent},
+      {path: 'articles', component: ArticlesComponent},
     ]
   }
 ];

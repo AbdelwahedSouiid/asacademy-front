@@ -9,7 +9,7 @@ import {ContactComponent} from './contact/contact.component';
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MesCoursComponent} from './acount/mes-cours/mes-cours.component';
 import {ProfileComponent} from './acount/profile/profile.component';
 import {SettingsComponent} from './acount/settings/settings.component';
@@ -20,6 +20,8 @@ import {MatDialogActions, MatDialogContent} from "@angular/material/dialog";
 import {VideosComponent} from './gestion_videos/videos/videos.component';
 import {ArticlesComponent} from './gestion_article/articles/articles.component';
 import {CoursComponent} from './gestion_cour/cours/cours.component';
+import {WatchComponent} from './gestion_videos/watch/watch.component';
+import {AuthInterceptor} from "../../interceptors/app-http.interceptor";
 
 
 @NgModule({
@@ -39,11 +41,12 @@ import {CoursComponent} from './gestion_cour/cours/cours.component';
     ConfirmDialogueComponent,
     VideosComponent,
     ArticlesComponent,
-    CoursComponent
+    CoursComponent,
+    WatchComponent
   ],
-  exports: [
-    FooterComponent,
-    NavbarComponent
+  exports: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
   imports: [
     CommonModule,

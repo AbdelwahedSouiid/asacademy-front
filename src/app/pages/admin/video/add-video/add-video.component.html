@@ -1,0 +1,57 @@
+<div class="col-md-6 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Video Form</h4>
+      <p class="card-description">
+        Basic form layout
+      </p>
+      <form class="forms-sample" [formGroup]="videoForm" (ngSubmit)="handleAjouterVideo()">
+        <div class="form-group">
+          <label for="titre">Title</label>
+          <input type="text" class="form-control" formControlName="titre" id="titre" placeholder="Title">
+          <div *ngIf="videoForm.get('titre')?.invalid && videoForm.get('titre')?.touched" class="text-danger">
+            Title is required.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea class="form-control" formControlName="description" id="description"
+                    placeholder="Description"></textarea>
+          <div *ngIf="videoForm.get('description')?.invalid && videoForm.get('description')?.touched"
+               class="text-danger">
+            Description is required.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="categorie">Category</label>
+          <select id="categorie" class="form-control" formControlName="categorie">
+            <option *ngFor="let categorie of categories" [value]="categorie.id">{{ categorie.nom }}</option>
+          </select>
+          <div *ngIf="videoForm.get('categorie')?.invalid && videoForm.get('categorie')?.touched" class="text-danger">
+            Category is required.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="formateur">Formateur</label>
+          <select id="formateur" class="form-control" formControlName="formateur">
+            <option *ngFor="let formateur of formateurs" [value]="formateur.id">{{ formateur.nom }}</option>
+          </select>
+          <div *ngIf="videoForm.get('formateur')?.invalid && videoForm.get('formateur')?.touched" class="text-danger">
+            Category is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="videoUrl">Upload video</label>
+          <input id="videoUrl" type="file" class="form-control" formControlName="videoUrl"
+                 (change)="onFileSelected($event)">
+          <div *ngIf="videoForm.get('videoUrl')?.invalid && videoForm.get('videoUrl')?.touched"
+               class="text-danger">
+            Video is required.
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

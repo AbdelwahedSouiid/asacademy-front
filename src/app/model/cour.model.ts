@@ -1,6 +1,8 @@
 import {Categorie} from "./categorie.model";
 import {Inscription} from "./inscription.model";
 import {Formateur} from "./formateur.model";
+import {Avis} from "./avis.model";
+import {Tag} from "./tag.model";
 
 export interface Cour {
 
@@ -12,12 +14,15 @@ export interface Cour {
   prix: number;
   video: string;
   affiche: string;
-  formateurId: string;
-  categorieId: string;
+  dateCreation: string;
+  paiement: string;
+  formateur: Formateur;
+  categorie: Categorie;
+  avis: Avis[];
+  tags: Tag[];
+
+  inscriptions: Inscription[];
+
 }
 
-
-/*dateCreation: Date;
-inscriptions: Inscription[];
-;*/
 

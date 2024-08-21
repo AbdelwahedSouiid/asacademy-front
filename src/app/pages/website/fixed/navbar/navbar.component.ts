@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../../services/login/auth.service";
-import {Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
 import {CategorieService} from "../../../../services/categorie/categorie.service";
 import {Categorie} from "../../../../model/categorie.model";
 import {environment} from "../../../../../environments/environment";
@@ -11,10 +11,11 @@ import {environment} from "../../../../../environments/environment";
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit {
+  activeLink: string = '/home';
+  searchTerm: string = '';
 
-  photo!: string;
-  username!: string | null;
   categories: Categorie[] = [];
+
 
   constructor(public authService: AuthService,
               private router: Router,
@@ -23,13 +24,17 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCategories();
-    this.getProfile();
+    this.setActiveLink()
   }
 
-  getProfile() {
-    this.photo = `${environment.url}/load/PhotoUser/${this.authService.photo}`
-    this.username = this.authService.username;
+  setActiveLink(): void {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.activeLink = event.urlAfterRedirects;
+      }
+    });
   }
+
 
   logout(): void {
     this.authService.logout();
@@ -46,4 +51,6 @@ export class NavbarComponent implements OnInit {
       }
     );
   }
+
+  protected readonly environment = environment;
 }

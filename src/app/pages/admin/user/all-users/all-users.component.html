@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <p class="card-title mb-0">All Users</p>
+        <div class="d-flex align-items-center">
+          <div class="form-group mb-0 mr-2">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search User" aria-label="Search User">
+              <div class="input-group-append">
+                <button class="btn btn-sm btn-primary" type="button">Search</button>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" routerLink="/admin/users/add-User">Add User</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="display expandable-table dataTable no-footer" style="width: 100%;" role="grid">
+            <thead>
+            <tr role="row">
+              <th>Email</th>
+              <th>Username</th>
+              <th>Roles</th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let user of listUsers">
+              <td>{{ user.email }}</td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.roles.join(', ') }}</td>
+              <td>
+                <button class="btn btn-sm btn-warning" [routerLink]="['/admin/users/edit-User', user.id]">Edit</button>
+              </td>
+              <td>
+                <button class="btn btn-sm btn-info" [routerLink]="['/admin/users/User-detail', user.id]">Detail</button>
+              </td>
+              <td>
+                <button class="btn btn-sm btn-danger" (click)="onDelete(user)">Delete</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

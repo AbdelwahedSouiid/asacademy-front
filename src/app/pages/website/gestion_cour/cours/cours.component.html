@@ -1,1 +1,63 @@
-<p>cours works!</p>
+<div class="container py-4">
+
+  <div class="tab-content mb-4">
+    <div id="tab-1" class="tab-pane fade show p-0 active">
+      <div class="row g-4">
+        <div class="col-lg-3">
+          <div class="p-3 bg-light rounded border">
+            <h5 class="mb-4">Filter Options</h5>
+            <!-- Category Filter -->
+            <div class="mb-3">
+              <h6 class="mb-2">Category</h6>
+              <select class="form-select" aria-label="Category select">
+                <option value="1" selected>Gratuit</option>
+                <option value="2">Payant</option>
+                <!-- Add more categories as needed -->
+              </select>
+            </div>
+
+            <!-- Date Range Filter -->
+            <div class="mb-3">
+              <h6 class="mb-2">Date Range</h6>
+              <div class="d-flex">
+                <input type="date" class="form-control me-2" aria-label="Start date">
+                <!--input type="date" class="form-control" aria-label="End date"-->
+              </div>
+            </div>
+            
+            <!-- Search Filter -->
+            <div class="mb-3">
+              <h6 class="mb-2">Search</h6>
+              <input type="text" class="form-control" placeholder="Search keywords">
+            </div>
+            <!-- Apply Filter Button -->
+            <button type="button" class="btn btn-primary w-100">Apply Filters</button>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="row g-4">
+            <div class="col-12">
+              <div class="row g-4 align-items-center" *ngFor="let cour of cours">
+                <div class="col-5">
+                  <div class="overflow-hidden rounded">
+                    <img src="{{environment.url+'/load/AfficheCour/'+cour.affiche}}" class=" img-fluid rounded w-100"
+                         alt="">
+                  </div>
+                </div>
+                <div class="col-7">
+                  <div class="features-content d-flex flex-column">
+                    <p class="text-uppercase mb-2">Sports</p>
+                    <a class="h6">{{ cour.name }}</a>
+                    <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+

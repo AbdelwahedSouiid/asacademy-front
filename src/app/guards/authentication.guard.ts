@@ -17,6 +17,7 @@ export class AuthenticationGuard implements CanActivate {
     if (this.authService.isAuthenticated || this.authService.accessToken) {
       return true;
     } else {
+      localStorage.setItem('redirectUrl', this.router.url);
       this.router.navigateByUrl('/login');
       return false;
     }
