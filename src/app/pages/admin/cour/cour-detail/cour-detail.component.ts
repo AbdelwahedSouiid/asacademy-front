@@ -45,7 +45,6 @@ export class CourDetailComponent implements OnInit {
       }
     });
 
-
   }
 
   showContent(contentType: string): void {

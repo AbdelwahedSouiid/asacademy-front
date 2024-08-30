@@ -9,11 +9,11 @@ import {CourService} from "../../../services/cour/cour.service";
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent implements OnInit {
-  constructor(private courService: CourService, private router: Router) {}
+  constructor(private courService: CourService, private router: Router) {
+  }
 
   ngOnInit(): void {
-    // Vous pouvez utiliser courService ici pour initialiser `name`
-    // this.name = this.courService.getCour();
+
   }
 
 }

@@ -5,9 +5,10 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Cour} from "../../../../model/cour.model";
 import {Categorie} from "../../../../model/categorie.model";
 import {CategorieService} from "../../../../services/categorie/categorie.service";
-import {error} from "@angular/compiler-cli/src/transformers/util";
 import {Formateur} from "../../../../model/formateur.model";
 import {FormateurService} from "../../../../services/formateur/formateur.service";
+import {Tag} from "../../../../model/tag.model";
+import {TagService} from "../../../../services/tag/tag.service";
 
 @Component({
   selector: 'app-add-cour',
@@ -19,13 +20,17 @@ export class AddCourComponent implements OnInit {
   courForm: FormGroup;
   categories!: Categorie[];
   formateurs!: Formateur[];
-  selectedFile: File | null = null;
+  tags!: Tag[];
+  courTags!: Tag[];
+  selectedAfficheFile: File | null = null;
+  selectedVideoFile: File | null = null;
 
   constructor(private fb: FormBuilder,
               private categorieService: CategorieService,
               private courService: CourService,
               private router: Router,
-              private formateurService: FormateurService,) {
+              private formateurService: FormateurService,
+              private tagService: TagService) {
 
     this.courForm = this.fb.group({
       name: ['', Validators.required],
@@ -35,18 +40,20 @@ export class AddCourComponent implements OnInit {
       affiche: ['', Validators.required],
       categorie: ['', Validators.required],
       formateur: ['', Validators.required],
+      tags: [''],
+      video: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
     this.getCategories();
     this.getFormateurs();
+    this.getTags();
   }
 
   getCategories() {
     this.categorieService.getCategories().subscribe(
       data => {
-        console.log('Categories:', data);
         this.categories = data;
       },
       error => {
@@ -55,10 +62,20 @@ export class AddCourComponent implements OnInit {
     );
   }
 
+  getTags() {
+    this.tagService.getTags().subscribe(
+      data => {
+        this.tags = data;
+      },
+      error => {
+        console.log('No TAG Found', error);
+      }
+    );
+  }
+
   getFormateurs() {
     this.formateurService.getFormateurs().subscribe(
       data => {
-        console.log('Formateurs:', data);
         this.formateurs = data;
       },
       error => {
@@ -76,6 +93,7 @@ export class AddCourComponent implements OnInit {
     const selectedCategorie = this.categories.find(c => c.id === this.courForm.value.categorie);
     const selectedFormateur = this.formateurs.find(f => f.id === this.courForm.value.formateur);
 
+
     // Assurer que les objets sont trouvés
     if (!selectedCategorie || !selectedFormateur) {
       console.error('Categorie or Formateur not found');
@@ -85,24 +103,30 @@ export class AddCourComponent implements OnInit {
     const cour: Cour = {
       ...this.courForm.value,
       categorie: selectedCategorie,
-      formateur: selectedFormateur,
-      // Assurez-vous que les autres champs correspondent au modèle Cour
+      formateur: selectedFormateur
+
     };
-    console.log(cour);
 
     this.courService.ajouterCour(cour).subscribe(
       response => {
         console.log('Cour added successfully', response);
-        if (this.selectedFile) {
-          this.courService.uploadImage(this.selectedFile, response.id).subscribe({
+        if (this.selectedAfficheFile && this.selectedVideoFile) {
+          this.courService.uploadImage(this.selectedAfficheFile, response.id).subscribe({
             next: () => {
-              console.log('Image uploaded successfully');
+              console.log('Affiche uploaded successfully');
               this.router.navigateByUrl('/admin/cours/all-Cours');
             },
             error: err => {
               console.error('Image upload failed', err);
             }
           });
+          this.courService.uploadCourVideo(this.selectedVideoFile, response.id).subscribe(
+            next => {
+              console.log('Video uploaded successfully');
+            }, error => {
+              console.log(error);
+            }
+          )
         } else {
           this.router.navigateByUrl('/admin');
         }
@@ -114,10 +138,17 @@ export class AddCourComponent implements OnInit {
   }
 
 
-  onFileSelected(event: Event) {
+  onAfficheSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
+      this.selectedAfficheFile = input.files[0];
+    }
+  }
+
+  onVideoSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedVideoFile = input.files[0];
     }
   }
 }

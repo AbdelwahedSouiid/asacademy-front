@@ -20,7 +20,6 @@ export interface Cour {
   categorie: Categorie;
   avis: Avis[];
   tags: Tag[];
-
   inscriptions: Inscription[];
 
 }

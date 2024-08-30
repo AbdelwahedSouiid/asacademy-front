@@ -1,3 +1,14 @@
+/** card **/
+
+.card-animation {
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.card-animation:hover {
+  transform: scale(1.05);
+}
+
 /*** logo ***/
 .logo-size {
   width: 100px; /* Adjust size as needed */
@@ -92,15 +103,6 @@
   border-radius: 20px;
 }
 
-.img-zoomin {
-  transition: 0.5s;
-
-}
-
-.img-zoomin:hover {
-  transform: scale(1.05);
-
-}
 
 /*** video start ***/
 
@@ -292,7 +294,6 @@
   background-size: cover;
 }
 
-/*, url(../img/background.jpg);*/
 /*** Features End ***/
 
 

@@ -1,63 +1,134 @@
-<div class="container py-4">
+<div class="features ">
+  <div class="container py-4">
+    <h2 class="mb-4">Nos Cour </h2>
+  </div>
+</div>
+<div class="container-fluid py-4">
+  <div class="container ">
+    <div class="row">
+      <div class="col-lg-4">
+         <span id="filter-toggle" class="btn btn-secondary p-3 ms-2" (click)="toggleFilters()">
+           <a> <i class="fa fa-bars text-white"></i>FILTRER</a> <!-- Icone du hamburger -->
+          </span>
+      </div>
+      <div class="col-lg-5">
+        <!-- search start -->
+        <!-- search start -->
+        <div class="d-flex justify-content-center mb-4">
+          <div class="input-group">
+            <input [(ngModel)]="searchTerm" (input)="search()" type="text" class="form-control p-3"
+                   data-bs-toggle="dropdown">
+            <span id="search-icon-1" class="btn btn-primary p-3">
+            <i class="fa fa-search text-white"></i>
+          </span>
 
-  <div class="tab-content mb-4">
-    <div id="tab-1" class="tab-pane fade show p-0 active">
+            <ul class="list-unstyled mt-2 dropdown-menu" *ngIf="cours.length > 0">
+              <li *ngFor="let cour of cours">
+                <a class="dropdown-item" [routerLink]="['/cours/search', cour.name]">{{ cour.name }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- search end -->
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container tab-content ">
+
+    <div id="tab-1" class="tab-pane fade show active">
       <div class="row g-4">
-        <div class="col-lg-3">
-          <div class="p-3 bg-light rounded border">
-            <h5 class="mb-4">Filter Options</h5>
+
+        <!--filter section -->
+        <div *ngIf="showFilters" class="col-lg-3">
+          <div class="accordion" id="accordionFilterOptions ">
+            <!-- Search Filter -->
+            <div class="accordion-item ">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#searchFilter" aria-expanded="true" aria-controls="searchFilter">
+                  <a> Search</a>
+                </button>
+              </h2>
+              <div id="searchFilter" class="accordion-collapse collapse ">
+                <div class="accordion-body">
+                  <input type="text" class="form-control" placeholder="Search keywords" [(ngModel)]="searchTerm">
+                </div>
+              </div>
+            </div>
+
             <!-- Category Filter -->
-            <div class="mb-3">
-              <h6 class="mb-2">Category</h6>
-              <select class="form-select" aria-label="Category select">
-                <option value="1" selected>Gratuit</option>
-                <option value="2">Payant</option>
-                <!-- Add more categories as needed -->
-              </select>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#categoryFilter" aria-expanded="false" aria-controls="categoryFilter">
+                  Category
+                </button>
+              </h2>
+              <div id="categoryFilter" class="accordion-collapse collapse ">
+                <div class="accordion-body">
+                  <select class="form-select">
+                    <!--option *ngFor="let categorie of categories" [value]="categorie.nom"
+                            [routerLink]="['/videos/categorie', value]">
+                      {{ categorie.nom }}
+                    </option-->
+                  </select>
+                </div>
+              </div>
             </div>
 
             <!-- Date Range Filter -->
-            <div class="mb-3">
-              <h6 class="mb-2">Date Range</h6>
-              <div class="d-flex">
-                <input type="date" class="form-control me-2" aria-label="Start date">
-                <!--input type="date" class="form-control" aria-label="End date"-->
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#dateRangeFilter" aria-expanded="false" aria-controls="dateRangeFilter">
+                  Date Range
+                </button>
+              </h2>
+              <div id="dateRangeFilter" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <div class="d-flex">
+                    <input type="date" class="form-control me-2" [(ngModel)]="startDate">
+                    <input type="date" class="form-control" [(ngModel)]="endDate">
+                  </div>
+                </div>
               </div>
             </div>
-            
-            <!-- Search Filter -->
-            <div class="mb-3">
-              <h6 class="mb-2">Search</h6>
-              <input type="text" class="form-control" placeholder="Search keywords">
-            </div>
-            <!-- Apply Filter Button -->
-            <button type="button" class="btn btn-primary w-100">Apply Filters</button>
           </div>
+
         </div>
-        <div class="col-lg-8">
+        <!--filter section -->
+        <!-- Courses Section -->
+        <div [ngClass]="showFilters ? 'col-lg-8':''">
           <div class="row g-4">
-            <div class="col-12">
-              <div class="row g-4 align-items-center" *ngFor="let cour of cours">
-                <div class="col-5">
-                  <div class="overflow-hidden rounded">
-                    <img src="{{environment.url+'/load/AfficheCour/'+cour.affiche}}" class=" img-fluid rounded w-100"
-                         alt="">
+            <!-- Course Item -->
+            <div [ngClass]="showFilters ? 'col-lg-4 col-md-4' : 'col-lg-3 col-md-3'" *ngFor="let course of cours">
+              <div class="border item card-animation" [routerLink]="['/cours/cour-detail', course.id]">
+                <div class="p-2 border border-opacity-80">
+                  <div class="image-container">
+                    <img class="img-fluid rounded-top" src="{{environment.url+'/load/AfficheCour/'+course.affiche}}"
+                         alt="{{ course.name }}">
                   </div>
-                </div>
-                <div class="col-7">
-                  <div class="features-content d-flex flex-column">
-                    <p class="text-uppercase mb-2">Sports</p>
-                    <a class="h6">{{ cour.name }}</a>
-                    <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
+                  <div class="d-flex flex-column p-3">
+                    <a class="h5">{{ course.name }}</a>
+                    <div class="d-flex justify-content-between">
+                      <a class="small text-body">by {{ course.formateur.prenom }} {{ course.formateur.nom }}</a>
+                      <small class="text-body d-block">
+                        <i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024
+                      </small>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+            <!-- End of Course Item -->
           </div>
         </div>
+
+
       </div>
     </div>
-
   </div>
 </div>
-

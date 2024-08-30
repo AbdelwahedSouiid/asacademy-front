@@ -69,7 +69,7 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label for="formateur">Formateur</label>
-                  <select id="formateur" class="form-control" formControlName="formateur">
+                  <select id="formateur" class="form-control js-example-basic-single" formControlName="formateur">
                     <option *ngFor="let formateur of formateurs" [value]="formateur.id">{{ formateur.nom }}
                     </option>
                   </select>
@@ -81,15 +81,41 @@
               </div>
               <div class="col-md-12">
                 <div class="form-group">
+                  <label for="tag">Tags</label>
+                  <select id="tag" class="form-control js-example-basic-multiple" formControlName="tags"
+                          multiple="multiple">
+                    <option *ngFor="let tag of tags" [value]="tag">{{ tag.name }}</option>
+                  </select>
+                  <!--div class="form-group" *ngFor="let t of courTags">
+                    <a class="btn btn-outline-primary">{{ t.name }} </a>
+                  </div-->
+                </div>
+
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
                   <label for="affiche">Upload Affiche</label>
                   <input id="affiche" type="file" class="form-control" formControlName="affiche"
-                         (change)="onFileSelected($event)">
+                         (change)="onAfficheSelected($event)">
                   <div *ngIf="courForm.get('affiche')?.invalid && courForm.get('affiche')?.touched"
                        class="text-danger">
                     Affiche is required.
                   </div>
                 </div>
               </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="video">Upload Video Commercial</label>
+                  <input id="video" type="file" class="form-control" formControlName="video"
+                         (change)="onVideoSelected($event)">
+                  <div *ngIf="courForm.get('video')?.invalid && courForm.get('video')?.touched"
+                       class="text-danger">
+                    Video is required.
+                  </div>
+                </div>
+              </div>
+
+
             </div>
             <div class="text-right">
               <button type="submit" class="btn btn-primary">Submit</button>

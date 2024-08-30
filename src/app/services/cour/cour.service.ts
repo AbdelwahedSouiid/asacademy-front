@@ -15,7 +15,9 @@ export class CourService {
   url = environment.url + "/cour";
 
   getCours(): Observable<any> {
-    const headers = new HttpHeaders().set("Content-Type", "application/json");
+    const headers = new HttpHeaders()
+      .set("Content-Type", "application/json")
+      .set('X-Skip-Auth', 'true');
     return this.http.get(this.url + "/retrieve-all-Cours", {headers});
   }
 
@@ -49,9 +51,24 @@ export class CourService {
     return this.http.request(request);
   }
 
-  getCoursByCategorie(categorieID: string): Observable<Cour[]> {
-    const headers = new HttpHeaders().set("Content-Type", "application/json");
-    return this.http.get<Cour[]>(this.url + "/search-By-categorie/" + categorieID, {headers});
+  uploadCourVideo(file: File, id: string): Observable<HttpEvent<{}>> {
+    let formData = new FormData();
+    formData.append('file', file);
+
+    const request = new HttpRequest('POST', `${environment.url}/upload/CourVideo/${id}`, formData, {
+      reportProgress: true,
+      responseType: 'text'
+    });
+    return this.http.request(request);
   }
 
+  getCoursByCategorie(categorieID: string): Observable<Cour[]> {
+    const headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.http.get<Cour[]>(this.url + "/retrieve-By-categorie/" + categorieID, {headers});
+  }
+
+  searchCour(searchTerm: string): Observable<Cour[]> {
+    const headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.http.get<Cour[]>(this.url + "/retrieve-By-Nom/" + searchTerm, {headers});
+  }
 }

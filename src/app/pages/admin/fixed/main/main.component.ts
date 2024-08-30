@@ -1,4 +1,5 @@
 import {Component, OnInit, Renderer2} from '@angular/core';
+import {NavigationEnd, Router} from "@angular/router";
 
 @Component({
   selector: 'app-main',
@@ -6,10 +7,23 @@ import {Component, OnInit, Renderer2} from '@angular/core';
   styleUrl: './main.component.css'
 })
 export class MainComponent implements OnInit {
-  constructor(private renderer: Renderer2) { }
+  activeLink: string = "";
+
+  constructor(private renderer: Renderer2, private router: Router) {
+  }
 
   ngOnInit(): void {
     this.loadResources();
+    this.setActiveLink();
+  }
+
+  setActiveLink() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        const link = event.urlAfterRedirects.split('/');
+        this.activeLink = link[2];
+      }
+    })
   }
 
   loadResources() {
@@ -17,10 +31,13 @@ export class MainComponent implements OnInit {
     this.loadStyle('assets/admin-template/vendors/feather/feather.css');
     this.loadStyle('assets/admin-template/vendors/ti-icons/css/themify-icons.css');
     this.loadStyle('assets/admin-template/vendors/css/vendor.bundle.base.css');
-    this.loadStyle('assets/admin-template/vendors/datatables.net-bs4/dataTables.bootstrap4.css');
+    // this.loadStyle('assets/admin-template/vendors/datatables.net-bs4/dataTables.bootstrap4.css');
     this.loadStyle('assets/admin-template/js/select.dataTables.min.css');
     this.loadStyle('assets/admin-template/css/vertical-layout-light/style.css');
-    this.loadStyle('assets/admin-template/images/favicon.png'); // If needed as link tag
+    //style for form page
+    this.loadStyle('assets/admin-template/vendors/select2/select2.min.css');
+    this.loadStyle('assets/admin-template/vendors/select2-bootstrap-theme/select2-bootstrap.min.css');
+
 
     // Load JS
     this.loadScript('assets/admin-template/vendors/js/vendor.bundle.base.js');
@@ -35,6 +52,10 @@ export class MainComponent implements OnInit {
     this.loadScript('assets/admin-template/js/todolist.js');
     this.loadScript('assets/admin-template/js/dashboard.js');
     this.loadScript('assets/admin-template/js/Chart.roundedBarCharts.js');
+    //script for form page
+    this.loadScript('assets/admin-template/js/select2.js');
+    this.loadScript('assets/admin-template/js/file-upload.js');
+
   }
 
   loadStyle(href: string) {

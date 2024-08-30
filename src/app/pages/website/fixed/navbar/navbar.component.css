@@ -1,52 +1,147 @@
-.profile-image {
-  width: 50px; /* Adjust size as needed */
-  height: 50px; /* Adjust size as needed */
-  /* Makes the image circular */
-  object-fit: cover; /* Ensures the image covers the circular area */
+
+.dropdown-menu {
+  display: block;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.3s linear;
 }
 
-
-.nav-item .dropdown-toggle {
-  border: 1px solid #fac663;
+.dropdown-menu.show {
+  visibility: visible;
+  opacity: 1;
 }
 
+.dropdown-item {
+  padding: 10px;
+  color: #333;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+  color: #fac663;
+}
+
+.dropdown-item:active {
+  background-color: #e9ecef;
+  color: #fac663;
+}
+
+/* barre de recherche */
 .box {
   position: relative;
 }
 
 .input {
   padding: 10px;
-  width: 50px;
+  width: 300px;
   height: 50px;
   background: none;
   border: 1px solid #FAC663;
-  border-radius: 50px;
+  border-radius: 30px;
   box-sizing: border-box;
   font-family: Comic Sans MS;
   font-size: 15px;
   color: #282104;
   outline: none;
-  transition: .5s;
+
 }
 
-.box:hover input {
-  width: 350px;
-  background: #ffffff;
-  border-radius: 10px;
+.input:focus {
+  background-color: #ffffff; /* Couleur de fond blanche lors du focus */
+  color: #282104; /* Couleur du texte */
+  border-color: #FAC663; /* Couleur de la bordure */
 }
 
 .box i {
   position: absolute;
   top: 50%;
-  right: 3px;
-  transform: translate(-50%, -50%);
+  right: 10px;
   font-size: 22px;
   color: #FAC663;
-  transition: .2s;
+  transform: translateY(-50%);
 }
 
-.box:hover i {
-  opacity: 0;
-  z-index: -1;
+/* Breadcrumb (Navbar 3) */
+
+#crumbs {
+
+  ul {
+    list-style: none;
+    display: inline-table;
+    padding: 0; /* Remove padding from the list */
+    margin: 5px; /* Remove margin from the list */
+
+    li {
+      display: inline;
+
+      a {
+        display: block;
+        float: left;
+        height: 40px; /* Reduce height */
+        background: rgba(var(--bs-light-rgb), var(--bs-bg-opacity));
+        text-align: center;
+        padding: 10px 10px 0 30px; /* Reduce padding */
+        position: relative;
+        margin: 0 5px 0 0; /* Reduce margin */
+        font-size: 14px; /* Reduce font size */
+        text-decoration: none;
+
+        &:after {
+          content: "";
+          border-top: 20px solid transparent; /* Reduce size of arrow */
+          border-bottom: 20px solid transparent;
+          border-left: 20px solid rgba(var(--bs-light-rgb), var(--bs-bg-opacity));
+          position: absolute;
+          right: -20px; /* Adjust based on reduced size */
+          top: 0;
+          z-index: 1;
+        }
+
+        &:before {
+          content: "";
+          border-top: 20px solid transparent; /* Reduce size of arrow */
+          border-bottom: 20px solid transparent;
+          border-left: 20px solid #fff;
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
+      }
+    }
+  }
 }
+
+
+#crumbs ul li:first-child a:before {
+  display: none;
+}
+
+#crumbs ul li:last-child a {
+  padding-right: 40px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+#crumbs ul li:last-child a:after {
+  display: none;
+}
+
+#crumbs ul li a:hover {
+  background: #FAC663;
+  color: #fff;
+}
+
+#crumbs ul li a:hover:after {
+  border-left-color: #FAC663;
+  color: #fff;
+}
+
+
 

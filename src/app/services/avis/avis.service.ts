@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders, HttpRequest, HttpEvent} from '@angular/common/h
 import {Observable} from 'rxjs';
 import {Avis} from "../../model/avis.model";
 import {environment} from "../../../environments/environment";
+import {Cour} from "../../model/cour.model";
 
 
 @Injectable({
@@ -15,9 +16,9 @@ export class AvisService {
   constructor(private http: HttpClient) {
   }
 
-  addAvis(avis: Avis, courId: string): Observable<Avis> {
+  addAvis(avis: Avis): Observable<Avis> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const url = `${this.url}/add-Avis/${courId}`;
+    const url = `${this.url}/add-Avis`;
     return this.http.post<Avis>(url, avis, {headers});
   }
 
@@ -44,6 +45,11 @@ export class AvisService {
   deleteAvis(id: string): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.delete(`${this.url}/remove-Avis/${id}`, {headers});
+  }
+
+  getAllAvisByCour(cour: Cour): Observable<Avis[]> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.get<Avis[]>(this.url + '/retrieve-Avis-By-Cour/' + cour.id, {headers});
   }
 
 

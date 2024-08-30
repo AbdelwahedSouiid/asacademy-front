@@ -14,7 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
     let authReq = req;
 
     // Routes exemptées d'authentification
-    const exemptedRoutes = ['/login', '/AppUser', '/home', '/register', '/blogs'];
+    const exemptedRoutes = ['/login', '/register'];
 
     // Vérifier si l'URL de la requête contient l'une des routes exemptées
     const isExempted = exemptedRoutes.some(route => req.url.includes(route));
@@ -23,16 +23,16 @@ export class AuthInterceptor implements HttpInterceptor {
     const skipAuth = req.headers.has('X-Skip-Auth');
 
     if (!isExempted && !skipAuth) {
-      const authUser = localStorage.getItem('authUser');
-      const token = authUser ? JSON.parse(authUser).jwt : null;
 
+      const token = this.authService.accessToken;
       if (token) {
         authReq = req.clone({
           setHeaders: {Authorization: `Bearer ${token}`}
         });
+        return next.handle(authReq);
       }
     }
-    return next.handle(req);
+    return next.handle(authReq);
   }
 }
 

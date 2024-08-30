@@ -11,5 +11,6 @@ export interface Blog {
   imageUrl: string;
 
   cour: Cour;
+  formateur: Formateur;
   tags: Tag[];
 }

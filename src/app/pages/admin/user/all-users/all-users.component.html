@@ -21,7 +21,7 @@
             <thead>
             <tr role="row">
               <th>Email</th>
-              <th>Username</th>
+              <th>name</th>
               <th>Roles</th>
               <th></th>
               <th></th>
@@ -31,7 +31,7 @@
             <tbody>
             <tr *ngFor="let user of listUsers">
               <td>{{ user.email }}</td>
-              <td>{{ user.username }}</td>
+              <td>{{ user.name }}</td>
               <td>{{ user.roles.join(', ') }}</td>
               <td>
                 <button class="btn btn-sm btn-warning" [routerLink]="['/admin/users/edit-User', user.id]">Edit</button>

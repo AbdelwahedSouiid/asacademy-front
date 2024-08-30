@@ -12,9 +12,11 @@ import {SettingsComponent} from "./acount/settings/settings.component";
 import {UnauthComponent} from "./unauth/unauth.component";
 import {CourDetailComponent} from "../website/gestion_cour/cour-detail/cour-detail.component";
 import {VideosComponent} from "./gestion_videos/videos/videos.component";
-import {WatchComponent} from "./gestion_videos/watch/watch.component";
 import {CoursComponent} from "./gestion_cour/cours/cours.component";
 import {ArticlesComponent} from "./gestion_article/articles/articles.component";
+import {AboutComponent} from "./about/about.component";
+import {ArticleDetailComponent} from "./gestion_article/article-detail/article-detail/article-detail.component";
+import {WatchComponent} from "./gestion_videos/watch/watch.component";
 
 
 const routes: Routes = [
@@ -24,17 +26,29 @@ const routes: Routes = [
     children: [
       {path: 'home', component: HomeComponent},
       {path: 'contact', component: ContactComponent},
+      {path: 'about', component: AboutComponent},
       {path: 'login', component: LoginComponent},
       {path: 'register', component: RegisterComponent},
       {path: 'mescours', component: MesCoursComponent},
       {path: 'profile', component: ProfileComponent},
       {path: 'settings', component: SettingsComponent},
       {path: 'unauth', component: UnauthComponent},
-      {path: 'cour-detail/:id', component: CourDetailComponent},
+      //gestion video
       {path: 'videos', component: VideosComponent},
-      {path: 'watch/:id', component: WatchComponent},
-      {path: 'cours/:categorieNom', component: CoursComponent},
+      {path: 'videos/categorie/:categorieNom', component: VideosComponent},
+      {path: 'videos/search/:searchTerm', component: VideosComponent},
+      {path: 'videos/video-detail/:id', component: WatchComponent},
+      //gestion cour
+      {path: 'cours/cour-detail/:id', component: CourDetailComponent},
+      {path: 'cours', component: CoursComponent},
+      {path: 'cours/categorie/:categorieNom', component: CoursComponent},
+      {path: 'cours/search/:searchTerm', component: CoursComponent},
+
+      // gestion article
       {path: 'articles', component: ArticlesComponent},
+      {path: 'articles/article-detail/:id', component: ArticleDetailComponent},
+      {path: 'articles/categorie/:categorieNom', component: ArticlesComponent},
+      {path: 'articles/search/:searchTerm', component: ArticlesComponent},
     ]
   }
 ];

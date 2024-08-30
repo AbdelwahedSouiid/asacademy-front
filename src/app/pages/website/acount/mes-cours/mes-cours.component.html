@@ -1,1 +1,38 @@
-<p>mes-cours works!</p>
+<div class="container py-4">
+  <div class="row">
+
+    <h1></h1>
+  </div>
+  <div class="tab-content mb-4">
+
+    <div id="tab-1" class="tab-pane fade show p-0 active">
+
+      <!-- Courses Section -->
+      <div class="col-lg-8">
+        <div class="row g-2">
+          <!-- Course Item -->
+          <div class="col-lg-4 col-md-4" *ngFor="let course of cours">
+            <div class="p-2 item card-animation" [routerLink]="['/cour-detail', course.id]">
+              <div class="p-2 border border-opacity-80">
+                <div class="image-container">
+                  <img class="img-fluid rounded-top" src="{{environment.url+'/load/AfficheCour/'+course.affiche}}"
+                       alt="{{ course.name }}">
+                </div>
+                <div class="d-flex flex-column p-3">
+                  <a class="h5">{{ course.name }}</a>
+                  <div class="d-flex justify-content-between">
+                    <a href="#" class="small text-body">by {{ course.description }}</a>
+                    <small class="text-body d-block">
+                      <i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End of Course Item -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

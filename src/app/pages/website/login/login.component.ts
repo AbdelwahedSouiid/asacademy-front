@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   formLogin: FormGroup;
   errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private renderer: Renderer2) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.formLogin = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -26,15 +26,16 @@ export class LoginComponent implements OnInit {
   }
 
   handleLogin(): void {
-    const username = this.formLogin.value.email;
+    const email = this.formLogin.value.email;
     const password = this.formLogin.value.password;
     const checkboxValue = this.formLogin.value.checkbox;
 
     console.log('Checkbox Value:', checkboxValue);
-    this.authService.login(username, password, checkboxValue).subscribe({
+    this.authService.login(email, password, checkboxValue).subscribe({
       next: data => {
         this.authService.loadProfile(data);
-        if (this.authService.roles.includes("USER")) {
+        const roles = this.authService.authenticatedUser.roles;
+        if (roles.includes("USER")) {
           // Après authentification réussie
           const redirectUrl = localStorage.getItem('redirectUrl');
           if (redirectUrl) {
@@ -43,8 +44,10 @@ export class LoginComponent implements OnInit {
           } else {
             this.router.navigateByUrl('/home');
           }
-        } else {
+        } else if (roles.includes("ADMIN")) {
           this.router.navigateByUrl('/admin');
+        } else {
+          console.log("aucun role trouvé")
         }
       },
       error: err => {

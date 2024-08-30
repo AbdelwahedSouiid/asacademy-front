@@ -1,4 +1,3 @@
-
 export interface Formateur {
 
   id: string;
@@ -7,4 +6,5 @@ export interface Formateur {
   email: string;
   telephone: number;
   address: string;
+  description: string;
 }

@@ -13,7 +13,7 @@
               </div>
             </div>
           </div>
-          <button class="btn btn-primary" routerLink="/categories/add">Ajouter Catégorie</button>
+          <button class="btn btn-primary" routerLink="/admin/categories/add-Categorie">Ajouter Catégorie</button>
         </div>
       </div>
       <div class="card-body">
@@ -33,10 +33,13 @@
               <td>{{ categorie.description }}</td>
               <td><img [src]="categorie.image" alt="{{ categorie.nom }}" width="50"></td>
               <td>
-                <button class="btn btn-sm btn-warning" [routerLink]="['/categories/edit', categorie.id]">Edit</button>
+                <button class="btn btn-sm btn-warning"
+                        [routerLink]="['/admin/categories/edit-Categorie', categorie.id]">Edit
+                </button>
               </td>
               <td>
-                <button class="btn btn-sm btn-info" [routerLink]="['/admin/blogs/Blog-detail', categorie.id]">Detail
+                <button class="btn btn-sm btn-info" [routerLink]="['/admin/categories/Categorie-detail', categorie.id]">
+                  Detail
                 </button>
               </td>
               <td>

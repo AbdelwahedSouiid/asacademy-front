@@ -5,6 +5,7 @@ import {Inscription} from "../../model/inscription.model";
 import {Avis} from "../../model/avis.model";
 import {Cour} from "../../model/cour.model";
 import {AppUser} from "../../model/user.model";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class InscriptionService {
   constructor(private http: HttpClient) {
   }
 
-  url = "http://localhost:8081/projet/inscription";
+  url = environment.url + "/inscription";
 
   getInscriptions(): Observable<any> {
     const headers = new HttpHeaders().set("Content-Type", "application/json");
@@ -39,4 +40,8 @@ export class InscriptionService {
     return this.http.put(`${this.url}/modify-Inscription`, inscription);
   }
 
+  getInscriptionsByUser(email: string): Observable<Inscription[]> {
+    const headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.http.get<Inscription[]>(`${this.url}/retrieve-inscriptions-By-User/${email}`, {headers});
+  }
 }

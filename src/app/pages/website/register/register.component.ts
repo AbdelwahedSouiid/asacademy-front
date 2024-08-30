@@ -10,14 +10,14 @@ import {AppUser} from "../../../model/user.model";
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent implements OnInit{
+export class RegisterComponent implements OnInit {
 
   formRegister: FormGroup;
   selectedFile: File | null = null;
 
   constructor(private fb: FormBuilder, private registerService: RegisterService, private router: Router) {
     this.formRegister = this.fb.group({
-      username: ['', Validators.required],
+      name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       phoneNumber: ['', Validators.required],

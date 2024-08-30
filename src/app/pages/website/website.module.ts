@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HomeComponent} from './home/home.component';
 import {NavbarComponent} from './fixed/navbar/navbar.component';
@@ -8,7 +8,7 @@ import {WebsiteRoutingModule} from "./website-routing.module";
 import {ContactComponent} from './contact/contact.component';
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MesCoursComponent} from './acount/mes-cours/mes-cours.component';
 import {ProfileComponent} from './acount/profile/profile.component';
@@ -20,8 +20,11 @@ import {MatDialogActions, MatDialogContent} from "@angular/material/dialog";
 import {VideosComponent} from './gestion_videos/videos/videos.component';
 import {ArticlesComponent} from './gestion_article/articles/articles.component';
 import {CoursComponent} from './gestion_cour/cours/cours.component';
-import {WatchComponent} from './gestion_videos/watch/watch.component';
 import {AuthInterceptor} from "../../interceptors/app-http.interceptor";
+import {AboutComponent} from './about/about.component';
+import {FilterPipe} from './gestion_cour/filter.pipe';
+import {ArticleDetailComponent} from './gestion_article/article-detail/article-detail/article-detail.component';
+import {WatchComponent} from './gestion_videos/watch/watch.component';
 
 
 @NgModule({
@@ -42,19 +45,24 @@ import {AuthInterceptor} from "../../interceptors/app-http.interceptor";
     VideosComponent,
     ArticlesComponent,
     CoursComponent,
+    AboutComponent,
+    FilterPipe,
+    ArticleDetailComponent,
     WatchComponent
   ],
   exports: [],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     CommonModule,
     WebsiteRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     MatDialogContent,
-    MatDialogActions
+    MatDialogActions,
   ]
 })
 export class WebsiteModule {

@@ -1,0 +1,56 @@
+<div class="background">
+  <div class="container px-2 ">
+
+    <div class="slider-wrapper">
+      <div class="card-list" *ngFor="let formateur of formateurs ">
+        <div class="card-item">
+          <img src="assets/user.png" class="user-image" alt="">
+          <h2 class="user-name">{{ formateur.nom }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid p-2">
+  <div class="container py-4 background">
+    <swiper-container class="custom-swiper " pagination="true" navigation="true">
+      <swiper-slide>
+        <div class="bg-light p-4 rounded">
+          <div class="row g-4 align-items-center ">
+            <div class="col-md-6">
+              <div class="rounded overflow-hidden">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex flex-column">
+                <a href="#" class="h3"></a>
+                <p class="mb-0 fs-5"><i class="fa fa-clock"> 06 minute read</i></p>
+                <p class="mb-0 fs-5"><i class="fa fa-eye"> 3.5k Views</i></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </swiper-slide>
+
+      <swiper-slide>
+        <div class="bg-light p-4 rounded">
+          <div class="row g-4 align-items-center ">
+            <div class="col-md-6">
+              <div class="rounded overflow-hidden">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex flex-column">
+                <a href="#" class="h3"></a>
+                <p class="mb-0 fs-5"><i class="fa fa-clock"> 06 minute read</i></p>
+                <p class="mb-0 fs-5"><i class="fa fa-eye"> 3.5k Views</i></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+  </div>
+</div>
+

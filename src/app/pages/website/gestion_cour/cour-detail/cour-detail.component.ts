@@ -2,18 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {CourService} from "../../../../services/cour/cour.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Cour} from "../../../../model/cour.model";
-
 import {environment} from "../../../../../environments/environment";
 import {AvisService} from "../../../../services/avis/avis.service";
-
 import {InscriptionService} from "../../../../services/inscription/inscription.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Avis} from "../../../../model/avis.model";
 import {AppUser} from "../../../../model/user.model";
 import {UserService} from "../../../../services/user/user.service";
-import {Blog} from "../../../../model/blog.model";
 import {Inscription} from "../../../../model/inscription.model";
-import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../../../../services/login/auth.service";
 
 
@@ -47,6 +43,7 @@ export class CourDetailComponent implements OnInit {
   ngOnInit(): void {
     this.loadCurrentCour();
     this.loadCurrentUser();
+
   }
 
   loadCurrentCour(): void {
@@ -55,13 +52,14 @@ export class CourDetailComponent implements OnInit {
       let idCour = params.get('id')!;
       this.courService.detail(idCour).subscribe(cour => {
         this.currentCour = cour;
+        this.loadAvis();
       });
     });
   }
 
   loadCurrentUser(): void {
     const authUser = localStorage.getItem('authUser');
-    const email = authUser ? JSON.parse(authUser).username : null;
+    const email = authUser ? JSON.parse(authUser).email : null;
     this.userService.getUser(email).subscribe({
       next: data => {
         this.currentUser = data;
@@ -70,8 +68,16 @@ export class CourDetailComponent implements OnInit {
   }
 
   loadAvis() {
-    this.avisList = this.currentCour.avis;
+    this.avisService.getAllAvisByCour(this.currentCour).subscribe(
+      data => {
+        this.avisList = data;
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
+
 
   handleAddAvis(): void {
 
@@ -82,9 +88,10 @@ export class CourDetailComponent implements OnInit {
     const avis: Avis = {
       ...this.avisForm.value,
       user: this.currentUser,
+      cour: this.currentCour
     };
     if (this.authService.isAuthenticated) {
-      this.avisService.addAvis(avis, this.currentCour.id).subscribe({
+      this.avisService.addAvis(avis).subscribe({
         next: (data) => {
           this.avisForm.reset();
           this.loadCurrentCour();

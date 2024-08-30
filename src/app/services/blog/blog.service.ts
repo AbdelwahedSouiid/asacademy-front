@@ -3,6 +3,7 @@ import {HttpClient, HttpEvent, HttpHeaders, HttpRequest} from "@angular/common/h
 import {Observable} from "rxjs";
 import {Blog} from "../../model/blog.model";
 import {environment} from "../../../environments/environment";
+import {Cour} from "../../model/cour.model";
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +17,9 @@ export class BlogService {
 
 
   getBlogs(skipAuth: boolean = true): Observable<Blog[]> {
-    let headers = new HttpHeaders().set("Content-Type", "application/json");
-
-    if (skipAuth) {
-      headers = headers.set('X-Skip-Auth', 'true');
-    }
+    let headers = new HttpHeaders()
+      .set("Content-Type", "application/json")
+      .set('X-Skip-Auth', 'true');
 
     return this.http.get<Blog[]>(`${this.url}/retrieve-all-Blog`, {headers});
   }
@@ -53,4 +52,15 @@ export class BlogService {
     });
     return this.http.request(request);
   }
+
+  searchBlog(searchTerm: string): Observable<Blog[]> {
+    const headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.http.get<Blog[]>(this.url + "/retrieve-By-Title/" + searchTerm, {headers});
+  }
+
+  getBlogsByCategorie(categorieID: string): Observable<Blog[]> {
+    const headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.http.get<Blog[]>(this.url + "/retrieve-By-categorie/" + categorieID, {headers});
+  }
+
 }

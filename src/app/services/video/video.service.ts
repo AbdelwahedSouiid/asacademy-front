@@ -3,6 +3,7 @@ import {HttpClient, HttpEvent, HttpHeaders, HttpRequest} from "@angular/common/h
 import {environment} from "../../../environments/environment";
 import {Observable} from "rxjs";
 import {Video} from "../../model/video.model";
+import {Cour} from "../../model/cour.model";
 
 
 @Injectable({
@@ -17,7 +18,8 @@ export class VideoService {
   url = environment.url + "/video";
 
   getVideos(): Observable<Video[]> {
-    const headers = new HttpHeaders().set("Content-Type", "application/json");
+    const headers = new HttpHeaders().set("Content-Type", "application/json").set('X-Skip-Auth', 'true');
+    ;
     return this.http.get<Video[]>(this.url + "/retrieve-all-Video", {headers});
   }
 
@@ -50,6 +52,16 @@ export class VideoService {
       responseType: 'text'
     });
     return this.http.request(request);
+  }
+
+  searchVideo(searchTerm: string): Observable<Video[]> {
+    const headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.http.get<Video[]>(this.url + "/retrieve-Video-By-titre/" + searchTerm, {headers});
+  }
+
+  getVideosByCategorie(categorieID: string): Observable<Video[]> {
+    const headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.http.get<Video[]>(this.url + "/retrieve-Video-By-categorie/" + categorieID, {headers});
   }
 
 }

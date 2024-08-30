@@ -18,7 +18,8 @@ export class EditCourComponent implements OnInit {
   courForm: FormGroup;
   categories!: any[];
   formateurs!: any[];
-  selectedFile: File | null = null;
+  selectedAfficheFile: File | null = null;
+  selectedVideoFile: File | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -34,7 +35,7 @@ export class EditCourComponent implements OnInit {
       duree: ['', Validators.required],
       prix: ['', Validators.required],
       categorie: ['', Validators.required],
-      formateur: ['', Validators.required]
+      formateur: ['', Validators.required],
     });
   }
 
@@ -56,7 +57,7 @@ export class EditCourComponent implements OnInit {
           duree: cour.duree,
           prix: cour.prix,
           categorie: cour.categorie.id,
-          formateur: cour.formateur.id
+          formateur: cour.formateur.id,
         });
       });
     });
@@ -93,7 +94,8 @@ export class EditCourComponent implements OnInit {
         duree: this.courForm.value.duree,
         prix: this.courForm.value.prix,
         categorie: this.categories.find(c => c.id === this.courForm.value.categorie),
-        formateur: this.formateurs.find(f => f.id === this.courForm.value.formateur)
+        formateur: this.formateurs.find(f => f.id === this.courForm.value.formateur),
+
       };
       this.courService.update(updatedCour).subscribe(
         () => {
@@ -108,10 +110,17 @@ export class EditCourComponent implements OnInit {
     }
   }
 
-  onFileSelected(event: Event) {
+  onAfficheSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
+      this.selectedAfficheFile = input.files[0];
+    }
+  }
+
+  onVideoSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedVideoFile = input.files[0];
     }
   }
 }

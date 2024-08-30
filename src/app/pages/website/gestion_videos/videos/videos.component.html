@@ -1,52 +1,101 @@
-<div class="container py-4">
+<div class="features ">
+  <div class="container py-4">
+    <h2 class="mb-4">Nos Videos</h2>
+  </div>
+</div>
 
-  <!-- search start -->
-  <div class="d-flex justify-content-center mb-4">
-    <div class="input-group w-75">
-      <input type="search" class="form-control p-3"
-             placeholder="Quels Videos Rechercher-vous  "
-             aria-describedby="search-icon-1">
-      <span id="search-icon-1" class="btn btn-primary p-3"><i class="fa fa-search text-white"></i></span>
+<div class="container-fluid py-4">
+  <div class="container ">
+    <div class="row">
+      <div class="col-lg-5">
+        <h1></h1>
+      </div>
+      <div class="col-lg-5">
+        <!-- search start -->
+        <div class="d-flex justify-content-center mb-4">
+          <div class="input-group ">
+            <input [(ngModel)]="searchTerm" (input)="search()" type="text" class="form-control p-3"
+                   data-bs-toggle="dropdown"
+                   (mousedown)="clearSearch()">
+            <span id="search-icon-1" class="btn btn-primary p-3"><i class="fa fa-search text-white"></i></span>
+            <ul class="list-unstyled mt-2 dropdown-menu"
+                *ngIf="allVideos.length > 0">
+              <li *ngFor="let video of allVideos">
+                <a class="dropdown-item"
+                   [routerLink]="['/videos/search', video.titre]">{{ video.titre }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- search end -->
+      </div>
     </div>
   </div>
-  <!-- search end -->
-  <div class="tab-content mb-4">
+
+
+  <div class="container tab-content ">
     <div id="tab-1" class="tab-pane fade show p-0 active">
       <div class="row g-4">
-        <div class="col-lg-2">
-          <div class="p-3 bg-light rounded border">
-            <h5 class="mb-4">Filter Options</h5>
-
-            <!-- Category Filter -->
-            <div class="mb-3">
-              <h6 class="mb-2">Category</h6>
-              <select class="form-select" aria-label="Category select">
-                <option selected>All Categories</option>
-                <option value="1">Sports</option>
-                <option value="2">Education</option>
-                <option value="3">Technology</option>
-                <!-- Add more categories as needed -->
-              </select>
-            </div>
-
-            <!-- Date Range Filter -->
-            <div class="mb-3">
-              <h6 class="mb-2">Date Range</h6>
-              <div class="d-flex">
-                <input type="date" class="form-control me-2" aria-label="Start date">
-                <!--input type="date" class="form-control" aria-label="End date"-->
+        <!--filter section -->
+        <div class="col-lg-3">
+          <div class="accordion" id="accordionFilterOptions">
+            <!-- Search Filter -->
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#searchFilter" aria-expanded="true" aria-controls="searchFilter">
+                  <a> Search</a>
+                </button>
+              </h2>
+              <div id="searchFilter" class="accordion-collapse collapse show">
+                <div class="accordion-body">
+                  <input type="text" class="form-control" placeholder="Search keywords" [(ngModel)]="searchTerm">
+                </div>
               </div>
             </div>
 
-            <!-- Search Filter -->
-            <div class="mb-3">
-              <h6 class="mb-2">Search</h6>
-              <input type="text" class="form-control" placeholder="Search keywords">
+            <!-- Category Filter -->
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#categoryFilter" aria-expanded="false" aria-controls="categoryFilter">
+                  Category
+                </button>
+              </h2>
+              <div id="categoryFilter" class="accordion-collapse ">
+                <div class="accordion-body">
+                  <select class="form-select">
+                    <!--option *ngFor="let categorie of categories" [value]="categorie.nom"
+                            [routerLink]="['/videos/categorie', value]">
+                      {{ categorie.nom }}
+                    </option-->
+                  </select>
+                </div>
+              </div>
             </div>
-            <!-- Apply Filter Button -->
-            <button type="button" class="btn btn-primary w-100">Apply Filters</button>
+
+            <!-- Date Range Filter -->
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#dateRangeFilter" aria-expanded="false" aria-controls="dateRangeFilter">
+                  Date Range
+                </button>
+              </h2>
+              <div id="dateRangeFilter" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <div class="d-flex">
+                    <input type="date" class="form-control me-2" [(ngModel)]="startDate">
+                    <input type="date" class="form-control" [(ngModel)]="endDate">
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+
         </div>
+        <!--filter section -->
+        <!--video section -->
         <div class="col-lg-8">
           <div class="row g-4">
             <div class="col-12">
@@ -54,13 +103,13 @@
                 <div class="col-5">
                   <div class="overflow-hidden rounded">
                     <video src="{{environment.url+'/load/video/'+video.videoUrl}}" class=" img-fluid rounded w-100"
-                           alt="" [routerLink]="['/watch', video.id]"></video>
+                           [routerLink]="['/videos/video-detail', video.id]"></video>
                   </div>
                 </div>
                 <div class="col-7">
                   <div class="features-content d-flex flex-column">
                     <p class="text-uppercase mb-2">Sports</p>
-                    <a class="h6">{{ video.titre }}</a>
+                    <a>{{ video.titre }}</a>
                     <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
                   </div>
                 </div>
@@ -68,9 +117,12 @@
             </div>
           </div>
         </div>
+        <!--video section -->
+
       </div>
     </div>
 
   </div>
 </div>
+
 
