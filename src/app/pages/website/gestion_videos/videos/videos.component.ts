@@ -22,6 +22,7 @@ export class VideosComponent implements OnInit {
   endDate: Date = new Date();
   categories: Categorie[] = [];
   categorieNom: string = '';
+  showFilters: boolean = true;
 
   constructor(private videoService: VideoService, private categorieService: CategorieService, private route: ActivatedRoute) {
   }
@@ -93,5 +94,7 @@ export class VideosComponent implements OnInit {
     });
   }
 
-
+  toggleFilters() {
+    this.showFilters = !this.showFilters;
+  }
 }

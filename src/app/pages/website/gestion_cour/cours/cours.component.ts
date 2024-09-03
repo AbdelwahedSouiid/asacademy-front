@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CourService} from "../../../../services/cour/cour.service";
 import {Cour} from "../../../../model/cour.model";
 import {environment} from "../../../../../environments/environment";
@@ -13,31 +13,64 @@ import {CategorieService} from "../../../../services/categorie/categorie.service
 })
 export class CoursComponent implements OnInit {
   searchTerm: string = '';
+  selectedTag: string = '';
+  selectedCategory: string = '';
+  selectedPrice: string = '';
+
   startDate: Date = new Date();
   endDate: Date = new Date();
   categories: Categorie[] = [];
-  categorieNom: string = '';
   cours: Cour[] = [];
   protected readonly environment = environment;
   showFilters: boolean = true;
 
-  constructor(private courService: CourService, private route: ActivatedRoute, private categoryService: CategorieService) {
+
+  constructor(private courService: CourService, private router: Router, private categoryService: CategorieService, private route: ActivatedRoute) {
   }
 
-  ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      const pathSegment = this.route.snapshot.url[1]?.path;
-      if (pathSegment === 'categorie') {
-        this.categorieNom = params.get('categorieNom') ?? '';
-        this.filterByCategory();
-      } else if (pathSegment === 'search') {
-        this.searchTerm = params.get('searchTerm') ?? '';
-        this.search();
-      } else {
-        this.loadCours();
-      }
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.searchTerm = params['name'] || '';
+      this.selectedTag = params['tag'] || '';
+      this.selectedCategory = params['category'] || '';
+      this.selectedPrice = params['price'] || '';
+
+      this.searchCourses();
     });
     this.getCategories();
+  }
+
+  searchCourses() {
+    const params: any = {};
+
+    if (this.searchTerm) {
+      params.name = this.searchTerm;
+    }
+
+    if (this.selectedTag) {
+      params.tag = this.selectedTag;
+    }
+
+    if (this.selectedCategory) {
+      params.category = this.selectedCategory;
+    }
+
+    if (this.selectedPrice) {
+      params.price = this.selectedPrice;
+    }
+
+    // Vérifiez si des paramètres de recherche ont été fournis
+    if (Object.keys(params).length > 0) {
+      this.courService.searchCours(params).subscribe(courses => {
+        this.cours = courses;
+        // Rediriger vers la route appropriée si nécessaire
+        this.router.navigate(['/cours'], {queryParams: params});
+      });
+    } else {
+      // Si aucun paramètre n'est fourni, vous pouvez charger tous les cours ou afficher un message
+      this.loadCours();
+    }
   }
 
   getCategories() {
@@ -51,37 +84,6 @@ export class CoursComponent implements OnInit {
     )
   }
 
-  filterByCategory(): void {
-    if (this.categorieNom.trim() !== '') {  // Check if categorieNom is not just whitespace or empty
-      this.courService.getCoursByCategorie(this.categorieNom).subscribe(
-        data => {
-          this.cours = data;
-        },
-        err => {
-          console.log('Error fetching courses by category:', err);
-        }
-      );
-    } else {
-      this.loadCours();  // Load all courses if categorieNom is empty
-    }
-  }
-
-
-  search(): void {
-    if (this.searchTerm.trim() !== '') {  // Check if searchTerm is not just whitespace or empty
-      this.courService.searchCour(this.searchTerm).subscribe(
-        data => {
-          this.cours = data;
-        },
-        err => {
-          console.log('Error searching for courses:', err);
-        }
-      );
-    } else {
-      this.loadCours();
-    }
-  }
-
   loadCours(): void {
     this.courService.getCours().subscribe(
       data => {
@@ -93,8 +95,8 @@ export class CoursComponent implements OnInit {
     );
   }
 
-
   toggleFilters() {
     this.showFilters = !this.showFilters;
   }
+
 }

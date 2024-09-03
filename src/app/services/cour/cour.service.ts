@@ -62,13 +62,9 @@ export class CourService {
     return this.http.request(request);
   }
 
-  getCoursByCategorie(categorieID: string): Observable<Cour[]> {
-    const headers = new HttpHeaders().set("Content-Type", "application/json");
-    return this.http.get<Cour[]>(this.url + "/retrieve-By-categorie/" + categorieID, {headers});
+
+  searchCours(params: { tag?: string; category?: string; name?: string; price?: string }): Observable<Cour[]> {
+    return this.http.get<Cour[]>(`${this.url}/search`, {params});
   }
 
-  searchCour(searchTerm: string): Observable<Cour[]> {
-    const headers = new HttpHeaders().set("Content-Type", "application/json");
-    return this.http.get<Cour[]>(this.url + "/retrieve-By-Nom/" + searchTerm, {headers});
-  }
 }

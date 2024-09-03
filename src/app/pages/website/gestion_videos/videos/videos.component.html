@@ -1,28 +1,33 @@
 <div class="features ">
   <div class="container py-4">
-    <h2 class="mb-4">Nos Videos</h2>
+    <h2 class="mb-4">Nos Cour </h2>
   </div>
 </div>
-
 <div class="container-fluid py-4">
-  <div class="container ">
+  <div class="container mb-4">
     <div class="row">
-      <div class="col-lg-5">
-        <h1></h1>
+      <div class="col-lg-1 d-flex justify-content-start">
+      <span id="filter-toggle" class="btn btn-primary p-3 d-flex align-items-center" (click)="toggleFilters()">
+        <i class="fa fa-bars text-white me-2"></i>
+        <a class="text-white m-0 p-0">FILTRER</a>
+      </span>
       </div>
+
+      <div class="col-lg-3"></div>
+
       <div class="col-lg-5">
         <!-- search start -->
-        <div class="d-flex justify-content-center mb-4">
-          <div class="input-group ">
+        <div class="d-flex justify-content-center ">
+          <div class="input-group">
             <input [(ngModel)]="searchTerm" (input)="search()" type="text" class="form-control p-3"
-                   data-bs-toggle="dropdown"
-                   (mousedown)="clearSearch()">
-            <span id="search-icon-1" class="btn btn-primary p-3"><i class="fa fa-search text-white"></i></span>
-            <ul class="list-unstyled mt-2 dropdown-menu"
-                *ngIf="allVideos.length > 0">
+                   data-bs-toggle="dropdown">
+            <span id="search-icon-1" class="btn btn-primary p-3">
+          <i class="fa fa-search text-white"></i>
+        </span>
+
+            <ul class="list-unstyled mt-2 dropdown-menu" *ngIf="allVideos.length > 0">
               <li *ngFor="let video of allVideos">
-                <a class="dropdown-item"
-                   [routerLink]="['/videos/search', video.titre]">{{ video.titre }}</a>
+                <a class="dropdown-item" [routerLink]="['/videos/search', video.titre]">{{ video.titre }}</a>
               </li>
             </ul>
           </div>
@@ -30,24 +35,25 @@
         <!-- search end -->
       </div>
     </div>
-  </div>
 
+  </div>
 
   <div class="container tab-content ">
     <div id="tab-1" class="tab-pane fade show p-0 active">
       <div class="row g-4">
-        <!--filter section -->
-        <div class="col-lg-3">
+        <!-- Filter Section -->
+        <div *ngIf="showFilters"
+             [ngClass]="{'col-lg-3': showFilters, '': !showFilters}">
           <div class="accordion" id="accordionFilterOptions">
             <!-- Search Filter -->
             <div class="accordion-item">
               <h2 class="accordion-header">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#searchFilter" aria-expanded="true" aria-controls="searchFilter">
-                  <a> Search</a>
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#searchFilter" aria-expanded="false" aria-controls="searchFilter">
+                  <a>Search</a>
                 </button>
               </h2>
-              <div id="searchFilter" class="accordion-collapse collapse show">
+              <div id="searchFilter" class="accordion-collapse collapse">
                 <div class="accordion-body">
                   <input type="text" class="form-control" placeholder="Search keywords" [(ngModel)]="searchTerm">
                 </div>
@@ -62,13 +68,10 @@
                   Category
                 </button>
               </h2>
-              <div id="categoryFilter" class="accordion-collapse ">
+              <div id="categoryFilter" class="accordion-collapse collapse">
                 <div class="accordion-body">
                   <select class="form-select">
-                    <!--option *ngFor="let categorie of categories" [value]="categorie.nom"
-                            [routerLink]="['/videos/categorie', value]">
-                      {{ categorie.nom }}
-                    </option-->
+                    <!-- Option items -->
                   </select>
                 </div>
               </div>
@@ -92,9 +95,8 @@
               </div>
             </div>
           </div>
-
         </div>
-        <!--filter section -->
+        <!-- End of Filter Section -->
         <!--video section -->
         <div class="col-lg-8">
           <div class="row g-4">

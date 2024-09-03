@@ -41,8 +41,6 @@ const routes: Routes = [
       //gestion cour
       {path: 'cours/cour-detail/:id', component: CourDetailComponent},
       {path: 'cours', component: CoursComponent},
-      {path: 'cours/categorie/:categorieNom', component: CoursComponent},
-      {path: 'cours/search/:searchTerm', component: CoursComponent},
 
       // gestion article
       {path: 'articles', component: ArticlesComponent},

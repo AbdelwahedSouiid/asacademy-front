@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../../services/login/auth.service";
-import {NavigationEnd, Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {CategorieService} from "../../../../services/categorie/categorie.service";
 import {Categorie} from "../../../../model/categorie.model";
 import {environment} from "../../../../../environments/environment";
 import {Cour} from "../../../../model/cour.model";
 import {CourService} from "../../../../services/cour/cour.service";
 import {AppUser} from "../../../../model/user.model";
+import {UserService} from "../../../../services/user/user.service";
 
 @Component({
   selector: 'app-navbar',
@@ -19,34 +20,19 @@ export class NavbarComponent implements OnInit {
   categories: Categorie[] = [];
   user!: AppUser;
 
-  public searchTerm: string = "";
   activeLink: string = 'home';
   activeNavbar: number = 1;
   secondActiveLink!: string;
 
+  searchTerm: string = '';
+  selectedCategory: string = '';
+  params: any = {};
 
   constructor(public authService: AuthService,
               private router: Router,
               private categorieService: CategorieService,
-              public courService: CourService
-  ) {
-  }
-
-
-  search(): void {
-    if (this.searchTerm.trim() !== '') {
-      this.courService.searchCour(this.searchTerm).subscribe(
-        data => {
-          this.cours = data;
-
-        },
-        err => {
-          console.log(err);
-        }
-      );
-    } else {
-      this.cours = [];
-    }
+              public courService: CourService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -55,27 +41,46 @@ export class NavbarComponent implements OnInit {
     this.setActiveLink()
   }
 
-  setActiveLink(): void {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        const link = event.urlAfterRedirects.split('/');
-        console.log(link);
-        if (link[2]) {
-          this.activeNavbar = 2;
-          this.activeLink = link[1];
-          this.secondActiveLink = link[2];
-        } else {
-          this.activeNavbar = 1;
-          this.activeLink = link[1];
-        }
-      }
-    });
+  searchCourses() {
+    const params: any = {};
+    let searchTerm = this.searchTerm.trim();
+
+    // Séparer les tags et mots-clés
+    const keywords = searchTerm.split(' ').filter(term => !term.startsWith('#'));
+    const tags = searchTerm.split(' ').filter(term => term.startsWith('#')).map(tag => tag.substring(1));
+
+    // Mettre à jour les paramètres de recherche
+    if (keywords.length > 0) {
+      params.name = keywords.join(' ');
+    }
+
+    if (this.selectedCategory) {
+      params.category = this.selectedCategory;
+    }
+
+    if (tags.length > 0) {
+      params.tag = tags.join(',');
+    }
+
+    if (Object.keys(params).length > 0) {
+      this.courService.searchCours(params).subscribe(courses => {
+        this.cours = courses;
+        this.router.navigate(['/cours'], {queryParams: params});
+      });
+    } else {
+      this.cours = [];
+      this.router.navigate(['/cours']);
+    }
   }
 
+  selectCategory(category: string) {
+    this.selectedCategory = category;
+    this.searchCourses();
+  }
 
-  logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+  clearSearch(): void {
+    this.searchTerm = '';
+    this.cours = [];
   }
 
   getCategories() {
@@ -89,12 +94,28 @@ export class NavbarComponent implements OnInit {
     );
   }
 
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+
   loadUser(): void {
     this.user = this.authService.authenticatedUser;
   }
 
-  clearSearch(): void {
-    this.searchTerm = '';
-    this.cours = [];
+  setActiveLink(): void {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const link = event.urlAfterRedirects.split('/');
+        if (link[2]) {
+          this.activeNavbar = 2;
+          this.activeLink = link[1];
+          this.secondActiveLink = link[2];
+        } else {
+          this.activeNavbar = 1;
+          this.activeLink = link[1];
+        }
+      }
+    });
   }
 }

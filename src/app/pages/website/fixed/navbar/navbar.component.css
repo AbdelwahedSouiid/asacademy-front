@@ -46,8 +46,8 @@
 
 .input {
   padding: 10px 10px 10px 40px;
+  width: 100%;
   background: none;
-  width: 350px;
   border: 1px solid #FAC663;
   border-radius: 30px;
   box-sizing: border-box;
