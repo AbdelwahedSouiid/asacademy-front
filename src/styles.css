@@ -26,5 +26,11 @@ body {
 }
 
 
+.card-move-left {
+  transform: translateX(0%); /* Ramène à gauche */
+}
+
+
+
 
 

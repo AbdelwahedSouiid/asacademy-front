@@ -10,7 +10,7 @@ export interface Blog {
   dateCreation: Date;
   imageUrl: string;
 
-  cour: Cour;
+  cour: Cour[];
   formateur: Formateur;
   tags: Tag[];
 }

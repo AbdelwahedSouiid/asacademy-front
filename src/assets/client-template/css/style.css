@@ -1,3 +1,16 @@
+.nav-item img {
+  max-height: 50px; /* Adjust based on your needs */
+}
+
+/* Navbar container */
+#navbarLargeScreen {
+  position: relative;
+}
+
+#navbarSmallScreen {
+  position: relative;
+}
+
 /** card **/
 
 .card-animation {
@@ -9,11 +22,6 @@
   transform: scale(1.05);
 }
 
-/*** logo ***/
-.logo-size {
-  width: 100px; /* Adjust size as needed */
-  height: 60px;
-}
 
 /*** Spinner Start ***/
 #spinner {

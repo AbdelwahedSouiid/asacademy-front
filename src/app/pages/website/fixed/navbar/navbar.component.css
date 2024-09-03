@@ -1,7 +1,12 @@
+.logo {
+  width: 70px; /* Adjust size as needed */
+  height: 50px; /* Adjust size as needed */
+
+}
 
 .dropdown-menu {
   display: block;
-  width: 100%;
+  width: 200px;
   max-height: 200px;
   overflow-y: auto;
   border-radius: 0 0 5px 5px;
@@ -10,6 +15,7 @@
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s, opacity 0.3s linear;
+  margin-top: 17px;
 }
 
 .dropdown-menu.show {
@@ -39,10 +45,9 @@
 }
 
 .input {
-  padding: 10px;
-  width: 300px;
-  height: 50px;
+  padding: 10px 10px 10px 40px;
   background: none;
+  width: 350px;
   border: 1px solid #FAC663;
   border-radius: 30px;
   box-sizing: border-box;
@@ -53,6 +58,7 @@
 
 }
 
+
 .input:focus {
   background-color: #ffffff; /* Couleur de fond blanche lors du focus */
   color: #282104; /* Couleur du texte */
@@ -62,7 +68,7 @@
 .box i {
   position: absolute;
   top: 50%;
-  right: 10px;
+  left: 10px;
   font-size: 22px;
   color: #FAC663;
   transform: translateY(-50%);
@@ -71,7 +77,6 @@
 /* Breadcrumb (Navbar 3) */
 
 #crumbs {
-
   ul {
     list-style: none;
     display: inline-table;
