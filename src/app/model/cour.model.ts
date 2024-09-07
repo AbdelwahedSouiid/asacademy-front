@@ -4,6 +4,11 @@ import {Formateur} from "./formateur.model";
 import {Avis} from "./avis.model";
 import {Tag} from "./tag.model";
 
+export enum PaiementType {
+  GRATUIT = 'GRATUIT',
+  PAYANT = 'PAYANT'
+}
+
 export interface Cour {
 
 
@@ -15,7 +20,7 @@ export interface Cour {
   video: string;
   affiche: string;
   dateCreation: string;
-  paiement: string;
+  paiement: PaiementType;
   formateur: Formateur;
   categorie: Categorie;
   avis: Avis[];

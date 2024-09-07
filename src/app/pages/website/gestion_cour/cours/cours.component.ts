@@ -1,10 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {CourService} from "../../../../services/cour/cour.service";
-import {Cour} from "../../../../model/cour.model";
-import {environment} from "../../../../../environments/environment";
-import {Categorie} from "../../../../model/categorie.model";
-import {CategorieService} from "../../../../services/categorie/categorie.service";
+import {ActivatedRoute, Router} from '@angular/router';
+import {CourService} from '../../../../services/cour/cour.service';
+import {Cour, PaiementType} from '../../../../model/cour.model';
+import {environment} from '../../../../../environments/environment';
+
+interface SearchParams {
+  name?: string;
+  category?: string;
+  tag?: string;
+  paiementType?: PaiementType;
+}
 
 @Component({
   selector: 'app-cours',
@@ -12,77 +17,47 @@ import {CategorieService} from "../../../../services/categorie/categorie.service
   styleUrls: ['./cours.component.css']
 })
 export class CoursComponent implements OnInit {
-  searchTerm: string = '';
-  selectedTag: string = '';
-  selectedCategory: string = '';
-  selectedPrice: string = '';
+
+  params: SearchParams = {};
 
   startDate: Date = new Date();
   endDate: Date = new Date();
-  categories: Categorie[] = [];
   cours: Cour[] = [];
   protected readonly environment = environment;
   showFilters: boolean = true;
 
-
-  constructor(private courService: CourService, private router: Router, private categoryService: CategorieService, private route: ActivatedRoute) {
+  constructor(
+    private courService: CourService,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {
   }
-
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.searchTerm = params['name'] || '';
-      this.selectedTag = params['tag'] || '';
-      this.selectedCategory = params['category'] || '';
-      this.selectedPrice = params['price'] || '';
-
+      this.params.category = params['category'] || '';
+      this.params.name = params['name'] || '';
+      this.params.paiementType = params['paiementType'] || '';
       this.searchCourses();
     });
-    this.getCategories();
   }
 
-  searchCourses() {
-    const params: any = {};
-
-    if (this.searchTerm) {
-      params.name = this.searchTerm;
-    }
-
-    if (this.selectedTag) {
-      params.tag = this.selectedTag;
-    }
-
-    if (this.selectedCategory) {
-      params.category = this.selectedCategory;
-    }
-
-    if (this.selectedPrice) {
-      params.price = this.selectedPrice;
-    }
-
-    // Vérifiez si des paramètres de recherche ont été fournis
-    if (Object.keys(params).length > 0) {
-      this.courService.searchCours(params).subscribe(courses => {
+  searchCourses(): void {
+    if (Object.keys(this.params).length > 0) {
+      this.courService.searchCours(this.params).subscribe(courses => {
         this.cours = courses;
-        // Rediriger vers la route appropriée si nécessaire
-        this.router.navigate(['/cours'], {queryParams: params});
       });
     } else {
-      // Si aucun paramètre n'est fourni, vous pouvez charger tous les cours ou afficher un message
       this.loadCours();
     }
   }
 
-  getCategories() {
-    this.categoryService.getCategories().subscribe(
-      data => {
-        this.categories = data
-      },
-      error => {
-        console.log('No Categories Found', error);
-      }
-    )
+  clearSearch(): void {
+    this.params = {}; // Clear the search params
+    this.loadCours(); // Reload courses after clearing search
+    this.router.navigate(['/cours']); // Corrected routing syntax with an array
   }
+
 
   loadCours(): void {
     this.courService.getCours().subscribe(
@@ -90,13 +65,30 @@ export class CoursComponent implements OnInit {
         this.cours = data;
       },
       err => {
-        console.log('Error loading all courses:', err);
+        console.error('Error loading all courses:', err);
       }
     );
   }
 
-  toggleFilters() {
+  isSearchParamsEmpty(): boolean {
+    return !this.params.name && !this.params.category && !this.params.tag && !this.params.paiementType;
+  }
+
+  toggleFilters(): void {
     this.showFilters = !this.showFilters;
   }
 
+  onSearchInput(event: Event): void {
+    const input = (event.target as HTMLInputElement).value;
+    this.params.name = input;
+
+    // Update queryParams in the URL
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {name: this.params.name}, // update only the 'name' query param
+      queryParamsHandling: 'merge' // merge with the existing query params
+    });
+
+    this.searchCourses(); // Optionally call searchCourses() here
+  }
 }

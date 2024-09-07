@@ -1,38 +1,64 @@
 <div class="features ">
   <div class="container py-4">
-    <h2 class="mb-4">Nos Cour </h2>
+    <h2 class="mb-4">Résultats pour:</h2>
+    <div class="search-info">
+      <h4 *ngIf="params.category" class="badge bg-primary me-2">Catégorie: {{ params.category }}</h4>
+      <h4 *ngIf="params.name" class="badge bg-secondary">Nom: {{ params.name }}</h4>
+      <h4 *ngIf="params.paiementType" class="badge bg-secondary">Prix: {{ params.paiementType }}</h4>
+    </div>
   </div>
 </div>
-<div class="container-fluid py-4">
+
+<div class="container-fluid " style="margin-bottom: 30px;">
   <div class="container mb-4">
-    <div class="row">
-      <div class="col-lg-1 d-flex justify-content-start">
-      <span id="filter-toggle" class="btn btn-primary p-3 d-flex align-items-center" (click)="toggleFilters()">
-        <i class="fa fa-bars text-white me-2"></i>
-        <a class="text-white m-0 p-0">FILTRER</a>
-      </span>
+    <div class="row g-4">
+      <div class="col-lg-1">
+        <div class="d-flex justify-content-start">
+        <span id="filter-toggle" class="btn btn-primary p-3 d-flex align-items-center" (click)="toggleFilters()">
+            <i class="fa fa-bars me-2"></i>
+            <a class="text-white m-0 p-0">FILTRER</a>
+          </span>
+        </div>
       </div>
-
-      <div class="col-lg-3"></div>
-
+      <div class="col-lg-2">
+        <div class=" d-flex justify-content-center">
+        <span *ngIf="!isSearchParamsEmpty()">
+          <a (click)="clearSearch()" class=" p-3">Effacer la recherche</a>
+        </span>
+        </div>
+      </div>
+      <!-- Filter Par -->
       <div class="col-lg-5">
-        <!-- search start -->
-        <div class="d-flex justify-content-center ">
+        <!-- Search start -->
+        <div class="d-flex justify-content-center">
           <div class="input-group">
-            <input [(ngModel)]="searchTerm" (input)="searchCourses()" type="text" class="form-control p-3"
-                   data-bs-toggle="dropdown">
+            <input (input)="onSearchInput($event)" type="text" class="form-control p-3"
+                   data-bs-toggle="dropdown" placeholder="Rechercher un cours...">
             <span id="search-icon-1" class="btn btn-primary p-3">
-          <i class="fa fa-search text-white"></i>
+              <i class="fa fa-search text-white"></i>
             </span>
-
             <ul class="list-unstyled mt-2 dropdown-menu" *ngIf="cours.length > 0">
               <li *ngFor="let cour of cours">
-                <a class="dropdown-item" [routerLink]="['/cours/search', cour.name]">{{ cour.name }}</a>
+                <a class="dropdown-item" [routerLink]="['/cours']"
+                   [queryParams]="{ name: cour.name }">
+                  {{ cour.name }}</a>
               </li>
             </ul>
           </div>
         </div>
-        <!-- search end -->
+        <!-- Search end -->
+      </div>
+      <div class="col-lg-2">
+        <div class=" d-flex justify-content-start">
+          <select class="form-select">
+            <option>
+              Plus récents
+            </option>
+            <option>
+              Les mieux notés
+            </option>
+          </select>
+        </div>
       </div>
     </div>
 
@@ -56,28 +82,13 @@
               </h2>
               <div id="searchFilter" class="accordion-collapse collapse">
                 <div class="accordion-body">
-                  <input [(ngModel)]="selectedTag" placeholder="Tag" (ngModelChange)="searchCourses()" type="text"
+                  <input [(ngModel)]="this.params.category" placeholder="Tag" (ngModelChange)="searchCourses()"
+                         type="text"
                          class="form-control">
                 </div>
               </div>
             </div>
 
-            <!-- Category Filter -->
-            <div class="accordion-item">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#categoryFilter" aria-expanded="false" aria-controls="categoryFilter">
-                  Category
-                </button>
-              </h2>
-              <div id="categoryFilter" class="accordion-collapse collapse">
-                <div class="accordion-body">
-                  <select class="form-select">
-                    <!-- Option items -->
-                  </select>
-                </div>
-              </div>
-            </div>
 
             <!-- Date Range Filter -->
             <div class="accordion-item">
@@ -96,6 +107,31 @@
                 </div>
               </div>
             </div>
+            <!-- Price Filter -->
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#priceFilter" aria-expanded="false" aria-controls="priceFilter">
+                  Prix
+                </button>
+              </h2>
+              <div id="priceFilter" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="paiementType" value="GRATUIT" id="freeCheck"
+                           [(ngModel)]="params.paiementType" (change)="searchCourses()">
+                    <label class="form-check-label" for="freeCheck">Gratuit</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="paiementType" value="PAYANT" id="paidCheck"
+                           [(ngModel)]="params.paiementType" (change)="searchCourses()">
+                    <label class="form-check-label" for="paidCheck">Payant</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
           </div>
         </div>
         <!-- End of Filter Section -->
@@ -105,7 +141,7 @@
           <div class="row g-4">
             <!-- Course Item -->
             <div *ngFor="let course of cours"
-                 [ngClass]="{'col-lg-4 col-md-6': showFilters,
+                 [ngClass]="{'col-lg-4 col-md-6 card-animation': showFilters,
                   'col-lg-3 col-md-6': !showFilters}">
               <div class="border item" [routerLink]="['/cours/cour-detail', course.id]">
                 <div class="p-2 border border-opacity-80">
@@ -129,7 +165,6 @@
           </div>
         </div>
         <!-- End of Courses Section -->
-
       </div>
     </div>
 

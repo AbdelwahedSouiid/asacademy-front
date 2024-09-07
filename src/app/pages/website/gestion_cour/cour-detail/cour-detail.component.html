@@ -1,4 +1,9 @@
-<div class="container-fluid py-5">
+<div class="features ">
+  <div class="container py-4">
+    <h2 class="mb-4">{{ currentCour.name }} </h2>
+  </div>
+</div>
+<div class="container-fluid py-2">
   <div class="container ">
     <div class="row g-4">
       <div class="col-lg-8 ">
@@ -11,12 +16,6 @@
         </div>
 
 
-        <div class="d-flex justify-content-between">
-          <a href="#" class="text-dark link-hover me-3"><i class="fa fa-clock"></i> 06 minute read</a>
-          <a href="#" class="text-dark link-hover me-3"><i class="fa fa-eye"></i> 3.5k Views</a>
-          <a href="#" class="text-dark link-hover me-3"><i class="fa fa-comment-dots"></i> 05 Comment</a>
-
-        </div>
         <p class="my-4">
           {{ currentCour.description }}
         </p>
@@ -125,8 +124,7 @@
                        class="img-fluid w-100 rounded"
                        alt="">
                   <div class="text-center banner-content-2">
-                    <h6 class="mb-2">{{ currentCour.name }}</h6>
-                    <p class="text-white mb-2">Gratuit</p>
+                    <p *ngIf="currentCour.paiement === 'GRATUIT'" class="text-white mb-2">Gratuit</p>
                     <a (click)="inscrire()" class="btn btn-primary text-white px-4">Commencer le cours</a>
                   </div>
                 </div>

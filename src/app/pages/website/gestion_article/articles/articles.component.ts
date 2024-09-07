@@ -1,4 +1,4 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BlogService} from "../../../../services/blog/blog.service";
 import {Blog} from "../../../../model/blog.model";
 import {environment} from "../../../../../environments/environment";
@@ -18,15 +18,17 @@ export class ArticlesComponent implements OnInit {
   categories: Categorie[] = [];
   categorieNom: string = '';
   blogs!: Blog[];
+
+  showFilters: boolean = true;
+
   protected readonly environment = environment;
 
-  constructor(private blogService: BlogService, private categoryService: CategorieService, private route: ActivatedRoute, private router: Router) {
+  constructor(private blogService: BlogService) {
   }
 
   ngOnInit(): void {
     this.getBlogs()
   }
-
 
   getBlogs() {
     this.blogService.getBlogs().subscribe(
@@ -51,30 +53,8 @@ export class ArticlesComponent implements OnInit {
     }
   }
 
-  filterByCategory(): void {
-    if (this.categorieNom.trim() !== '') {  // Check if categorieNom is not just whitespace or empty
-      this.blogService.getBlogsByCategorie(this.categorieNom).subscribe(
-        data => {
-          this.blogs = data;
-        },
-        err => {
-          console.log('Error fetching courses by category:', err);
-        }
-      );
-    } else {
-      this.getBlogs();  // Load all courses if categorieNom is empty
-    }
-  }
-
-  getCategories() {
-    this.categoryService.getCategories().subscribe(
-      data => {
-        this.categories = data
-      },
-      error => {
-        console.log('No Categories Found', error);
-      }
-    )
+  toggleFilters() {
+    this.showFilters = !this.showFilters;
   }
 
 

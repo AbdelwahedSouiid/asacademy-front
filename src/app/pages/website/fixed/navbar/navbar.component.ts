@@ -31,8 +31,7 @@ export class NavbarComponent implements OnInit {
   constructor(public authService: AuthService,
               private router: Router,
               private categorieService: CategorieService,
-              public courService: CourService,
-              private route: ActivatedRoute) {
+              public courService: CourService) {
   }
 
   ngOnInit(): void {
@@ -47,7 +46,7 @@ export class NavbarComponent implements OnInit {
 
     // Séparer les tags et mots-clés
     const keywords = searchTerm.split(' ').filter(term => !term.startsWith('#'));
-    const tags = searchTerm.split(' ').filter(term => term.startsWith('#')).map(tag => tag.substring(1));
+    const tags = searchTerm.split(' ').filter(term => term.startsWith('#'));
 
     // Mettre à jour les paramètres de recherche
     if (keywords.length > 0) {
@@ -65,17 +64,10 @@ export class NavbarComponent implements OnInit {
     if (Object.keys(params).length > 0) {
       this.courService.searchCours(params).subscribe(courses => {
         this.cours = courses;
-        this.router.navigate(['/cours'], {queryParams: params});
       });
     } else {
       this.cours = [];
-      this.router.navigate(['/cours']);
     }
-  }
-
-  selectCategory(category: string) {
-    this.selectedCategory = category;
-    this.searchCourses();
   }
 
   clearSearch(): void {

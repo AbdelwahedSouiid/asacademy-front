@@ -3,31 +3,46 @@
     <h2 class="mb-4">Nos Articles </h2>
   </div>
 </div>
-<div class="container-fluid py-4">
-  <div class="container ">
-    <div class="row">
-      <div class="col-lg-5">
-        <h1></h1>
+<div class="container-fluid ">
+  <div class="container mb-4">
+    <div class="row g-4">
+      <div class="col-lg-1 d-flex justify-content-start">
+          <span id="filter-toggle" class="btn btn-primary p-3 d-flex align-items-center" (click)="toggleFilters()">
+            <i class="fa fa-bars text-white me-2"></i>
+            <a class="text-white m-0 p-0">FILTRER</a>
+          </span>
       </div>
+      <!-- Filter Par -->
+      <div class="col-lg-3"></div>
       <div class="col-lg-5">
         <!-- search start -->
-        <div class=" d-flex justify-content-center mb-4">
-          <div class="input-group ">
-
+        <div class="d-flex justify-content-center ">
+          <div class="input-group">
             <input [(ngModel)]="searchTerm" (input)="search()" type="text" class="form-control p-3"
                    data-bs-toggle="dropdown">
-            <span id="search-icon-1" class="btn btn-primary p-3"><i class="fa fa-search text-white"></i></span>
+            <span id="search-icon-1" class="btn btn-primary p-3">
+          <i class="fa fa-search text-white"></i>
+            </span>
             <ul class="list-unstyled mt-2 dropdown-menu" *ngIf="blogs.length > 0">
-              <li *ngFor="let blog of blogs">
-                <a class="dropdown-item"
-                   [routerLink]="['/articles/search', blog.title ]">{{ blog.title }}</a>
+              <li *ngFor="let article of blogs">
+                <a class="dropdown-item" [routerLink]="['/articles/search', article.title]">{{ article.title }}</a>
               </li>
             </ul>
           </div>
         </div>
         <!-- search end -->
       </div>
+      <div class="col-lg-3  d-flex justify-content-start">
+        <select class="form-select">
+          <option>
+            Plus récents
+          </option>
+          <option>
+            Les mieux notés
+          </option>
+        </select>
 
+      </div>
     </div>
   </div>
 
@@ -36,14 +51,15 @@
     <div id="tab-1" class="tab-pane fade show active">
       <div class="row g-4">
         <!-- Filter Section -->
-        <div class="col-lg-3">
+        <div *ngIf="showFilters"
+             [ngClass]="{'col-lg-3': showFilters, '': !showFilters}">
           <div class="accordion" id="accordionFilterOptions">
-            <!-- Search Filter -->
+            <!-- Tag Filter -->
             <div class="accordion-item">
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                         data-bs-target="#searchFilter" aria-expanded="true" aria-controls="searchFilter">
-                  <a> Search</a>
+                  <a> Tag</a>
                 </button>
               </h2>
               <div id="searchFilter" class="accordion-collapse collapse show">
@@ -52,26 +68,6 @@
                 </div>
               </div>
             </div>
-
-            <!-- Category Filter -->
-            <div class="accordion-item">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#categoryFilter" aria-expanded="false" aria-controls="categoryFilter">
-                  Category
-                </button>
-              </h2>
-              <div id="categoryFilter" class="accordion-collapse collapse">
-                <div class="accordion-body">
-                  <select class="form-select" [(ngModel)]="categorieNom" (ngModelChange)="filterByCategory()">
-                    <option *ngFor="let categorie of categories" [value]="categorie.nom">
-                      {{ categorie.nom }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
             <!-- Date Range Filter -->
             <div class="accordion-item">
               <h2 class="accordion-header">
@@ -93,10 +89,12 @@
         </div>
 
         <!-- Courses Section -->
-        <div class="col-lg-9">
+        <div [ngClass]="showFilters ? 'col-lg-9' : 'col-lg-12'">
           <div class="row g-4">
             <!-- Course Item -->
-            <div class="col-lg-4 col-md-4" *ngFor="let blog of blogs">
+            <div *ngFor="let blog of blogs">
+              <!-- Course Item -->
+
               <div class="border item card-animation" [routerLink]="['/articles/article-detail', blog.id]">
                 <div class="p-2 border border-opacity-80">
                   <div class="image-container">

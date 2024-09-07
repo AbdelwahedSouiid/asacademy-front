@@ -11,17 +11,6 @@
   position: relative;
 }
 
-/** card **/
-
-.card-animation {
-  cursor: pointer;
-  transition: 0.5s;
-}
-
-.card-animation:hover {
-  transform: scale(1.05);
-}
-
 
 /*** Spinner Start ***/
 #spinner {

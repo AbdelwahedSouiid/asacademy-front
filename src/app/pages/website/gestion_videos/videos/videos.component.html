@@ -1,41 +1,53 @@
 <div class="features ">
   <div class="container py-4">
-    <h2 class="mb-4">Nos Cour </h2>
+    <h2 class="mb-4">Résultats pour:</h2>
+    <div class="search-info">
+      <h4 *ngIf="params.category" class="badge bg-primary me-2">Catégorie: {{ params.category }}</h4>
+      <h4 *ngIf="params.titre" class="badge bg-secondary">Nom: {{ params.titre }}</h4>
+    </div>
   </div>
 </div>
-<div class="container-fluid py-4">
+<div class="container-fluid ">
   <div class="container mb-4">
-    <div class="row">
+    <div class="row g-4">
       <div class="col-lg-1 d-flex justify-content-start">
-      <span id="filter-toggle" class="btn btn-primary p-3 d-flex align-items-center" (click)="toggleFilters()">
-        <i class="fa fa-bars text-white me-2"></i>
-        <a class="text-white m-0 p-0">FILTRER</a>
-      </span>
+          <span id="filter-toggle" class="btn btn-primary p-3 d-flex align-items-center" (click)="toggleFilters()">
+            <i class="fa fa-bars text-white me-2"></i>
+            <a class="text-white m-0 p-0">FILTRER</a>
+          </span>
       </div>
-
+      <!-- Filter Par -->
       <div class="col-lg-3"></div>
-
       <div class="col-lg-5">
         <!-- search start -->
         <div class="d-flex justify-content-center ">
           <div class="input-group">
-            <input [(ngModel)]="searchTerm" (input)="search()" type="text" class="form-control p-3"
-                   data-bs-toggle="dropdown">
+            <input (input)="onSearchInput($event) " type="text" class="form-control p-3"
+                   data-bs-toggle="dropdown" placeholder="Rechercher un videos...">
             <span id="search-icon-1" class="btn btn-primary p-3">
           <i class="fa fa-search text-white"></i>
-        </span>
-
+            </span>
             <ul class="list-unstyled mt-2 dropdown-menu" *ngIf="allVideos.length > 0">
               <li *ngFor="let video of allVideos">
-                <a class="dropdown-item" [routerLink]="['/videos/search', video.titre]">{{ video.titre }}</a>
+                <a class="dropdown-item" (click)="search()">{{ video.titre }}</a>
               </li>
             </ul>
           </div>
         </div>
         <!-- search end -->
       </div>
-    </div>
+      <div class="col-lg-3  d-flex justify-content-start">
+        <select class="form-select">
+          <option>
+            Plus récents
+          </option>
+          <option>
+            Les mieux notés
+          </option>
+        </select>
 
+      </div>
+    </div>
   </div>
 
   <div class="container tab-content ">
@@ -55,7 +67,7 @@
               </h2>
               <div id="searchFilter" class="accordion-collapse collapse">
                 <div class="accordion-body">
-                  <input type="text" class="form-control" placeholder="Search keywords" [(ngModel)]="searchTerm">
+                  <input type="text" class="form-control" placeholder="Search keywords" [(ngModel)]="params.titre">
                 </div>
               </div>
             </div>
@@ -70,11 +82,22 @@
               </h2>
               <div id="categoryFilter" class="accordion-collapse collapse">
                 <div class="accordion-body">
-                  <select class="form-select">
-                    <!-- Option items -->
-                  </select>
+                  <div class="offcanvas-body">
+                    <ul class="navbar-nav me-auto">
+                      <li class="nav-item">
+                        <ul class="list-unstyled">
+                          <li *ngFor="let c of categories">
+                            <a class="nav-link"
+                               [routerLink]="['/videos']"
+                               [queryParams]="{ category: c.nom }">{{ c.nom }}</a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
+
             </div>
 
             <!-- Date Range Filter -->
@@ -88,8 +111,8 @@
               <div id="dateRangeFilter" class="accordion-collapse collapse">
                 <div class="accordion-body">
                   <div class="d-flex">
-                    <input type="date" class="form-control me-2" [(ngModel)]="startDate">
-                    <input type="date" class="form-control" [(ngModel)]="endDate">
+                    <input type="date" class="form-control me-2">
+                    <input type="date" class="form-control">
                   </div>
                 </div>
               </div>

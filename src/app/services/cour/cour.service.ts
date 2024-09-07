@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpEvent, HttpHeaders, HttpRequest} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Cour} from "../../model/cour.model";
+import {Cour, PaiementType} from "../../model/cour.model";
 import {environment} from "../../../environments/environment";
 
 @Injectable({
@@ -63,8 +63,23 @@ export class CourService {
   }
 
 
-  searchCours(params: { tag?: string; category?: string; name?: string; price?: string }): Observable<Cour[]> {
-    return this.http.get<Cour[]>(`${this.url}/search`, {params});
+  searchCours(params: {
+    tag?: string;
+    category?: string;
+    name?: string;
+    paiementType?: PaiementType
+  }): Observable<Cour[]> {
+    const headers = new HttpHeaders()
+      .set("Content-Type", "application/json")
+      .set('X-Skip-Auth', 'true');
+
+    const options = {
+      headers: headers,
+      params: params
+    };
+
+    // Appeler l'API avec les options
+    return this.http.get<Cour[]>(`${this.url}/search`, options);
   }
 
 }

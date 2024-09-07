@@ -23,16 +23,17 @@
             <div class="offcanvas-body">
               <ul class="navbar-nav me-auto">
                 <li class="nav-item dropdown">
-                  <a routerLink="/cours" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categories</a>
+                  <a routerLink="cours" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categories</a>
                   <ul class="dropdown-menu">
                     <li *ngFor="let c of categories">
-                      <a class="dropdown-item" (click)="selectCategory(c.nom)">{{ c.nom }}</a>
+                      <a class="dropdown-item" [routerLink]="['/cours']"
+                         [queryParams]="{ category: c.nom }">{{ c.nom }}</a>
                     </li>
                   </ul>
                 </li>
                 <li class="nav-item dropdown w-100">
                   <div class="box me-3">
-                    <input [(ngModel)]="searchTerm" (input)="searchCourses()" type="text"
+                    <input [(ngModel)]=searchTerm (input)="searchCourses()" type="text"
                            class="input input-big dropdown-toggle"
                            data-bs-toggle="dropdown"
                            (mousedown)="clearSearch()">
@@ -40,17 +41,21 @@
                     <ul class="list-unstyled mt-2 dropdown-menu" aria-labelledby="dropdownMenuButton"
                         *ngIf="cours.length > 0">
                       <li *ngFor="let cour of cours">
-                        <a class="dropdown-item" (click)="searchCourses()">{{ cour.name }}</a>
+                        <a class="dropdown-item" [routerLink]="['/cours']"
+                           [queryParams]="{ name: cour.name }">
+                          {{ cour.name }}</a>
                       </li>
                     </ul>
                   </div>
                 </li>
+
               </ul>
             </div>
           </div>
           <!-- Main Navbar Content (visible on larger screens) -->
-          <div class="collapse navbar-collapse ms-auto">
-            <ul class="navbar-nav ms-auto ">
+          <div class="collapse navbar-collapse ">
+            <ul class="navbar-nav ms-auto">
+
               <li class="nav-item ">
                 <a class="nav-link" [routerLink]="['/about']" [class.active]="activeLink === 'about'">About</a>
               </li>
@@ -92,7 +97,7 @@
                 </div>
               </li>
               <li class="nav-item ">
-                <a *ngIf="!authService.isAuthenticated" class="btn btn-outline-primary" routerLink="/login">
+                <a *ngIf="!authService.isAuthenticated" class="btn btn-outline-primary " routerLink="/login">
                   Connecter
                 </a>
               </li>
@@ -105,14 +110,9 @@
           </div>
         </div>
       </nav>
-
-
     </div>
   </div>
   <!-- Main Navbar -->
-
-  <!-- Separator Line -->
-
 
   <!-- navbar 2 -->
   <ng-container *ngIf="activeNavbar === 1">
@@ -123,8 +123,10 @@
           <div class="navbar-collapse bg-light">
             <div class="navbar-nav">
               <a [routerLink]="'/home'" [class.active]="activeLink === 'home'" class="nav-item nav-link">Accueil</a>
-              <a [routerLink]="'/videos'" [class.active]="activeLink === 'videos'" class="nav-item nav-link">Videos</a>
-              <a [routerLink]="'/cours'" [class.active]="activeLink === 'cours'" class="nav-item nav-link">Cours</a>
+              <a [routerLink]="'/videos'" [class.active]="activeLink === 'videos'"
+                 class="nav-item nav-link">Videos</a>
+              <a [routerLink]="'/cours'" [class.active]="activeLink === 'cours'"
+                 class="nav-item nav-link">Cours</a>
               <a [routerLink]="'/articles'" [class.active]="activeLink === 'articles'" class="nav-item nav-link">Articles</a>
               <a *ngIf="authService.isAuthenticated" [routerLink]="'/mescours'"
                  [class.active]="activeLink === 'mescours'" class="nav-item nav-link">Mes Cours</a>

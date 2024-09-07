@@ -2,11 +2,17 @@ import {Component, OnInit} from '@angular/core';
 import {environment} from "../../../../../environments/environment";
 import {Video} from "../../../../model/video.model";
 import {VideoService} from "../../../../services/video/video.service";
-import {AuthService} from "../../../../services/login/auth.service";
-import {ActivatedRoute, Route, Router} from "@angular/router";
+
+import {ActivatedRoute, Router} from "@angular/router";
 import {Categorie} from "../../../../model/categorie.model";
 import {CategorieService} from "../../../../services/categorie/categorie.service";
-import {error} from "@angular/compiler-cli/src/transformers/util";
+import {PaiementType} from "../../../../model/cour.model";
+
+interface SearchParams {
+  titre?: string;
+  category?: string;
+  tag?: string;
+}
 
 @Component({
   selector: 'app-videos',
@@ -16,20 +22,34 @@ import {error} from "@angular/compiler-cli/src/transformers/util";
 export class VideosComponent implements OnInit {
 
   protected readonly environment = environment;
-  public searchTerm: string = "";
+
+  params: SearchParams = {};
+
   allVideos!: Video[];
-  startDate: Date = new Date();
-  endDate: Date = new Date();
   categories: Categorie[] = [];
-  categorieNom: string = '';
+
   showFilters: boolean = true;
 
-  constructor(private videoService: VideoService, private categorieService: CategorieService, private route: ActivatedRoute) {
+  constructor(private videoService: VideoService, private categorieService: CategorieService, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
-    this.refreshFilter();
+    this.route.queryParams.subscribe(params => {
+      this.params.category = params['category'] || '';
+      this.params.titre = params['titre'] || '';
+      this.search();
+    });
     this.getCategories();
+  }
+
+  search(): void {
+    if (Object.keys(this.params).length > 0) {
+      this.videoService.searchVideo(this.params).subscribe(videos => {
+        this.allVideos = videos;
+      });
+    } else {
+      this.getVideos();
+    }
   }
 
 
@@ -43,22 +63,6 @@ export class VideosComponent implements OnInit {
     );
   }
 
-  search(): void {
-    if (this.searchTerm.trim() !== '') {
-      this.videoService.searchVideo(this.searchTerm).subscribe(
-        data => {
-          this.allVideos = data;
-        },
-        err => {
-          console.log(err);
-        }
-      );
-    } else {
-      this.allVideos = [];
-
-    }
-  }
-
   getCategories() {
     this.categorieService.getCategories().subscribe(
       data => {
@@ -70,29 +74,27 @@ export class VideosComponent implements OnInit {
     )
   }
 
+
   clearSearch(): void {
-    this.searchTerm = '';
-    this.allVideos = [];
+    this.params = {}; // Clear the search params
+    this.getVideos();
+    this.router.navigate(['/videos']);
   }
 
-  refreshFilter() {
-    this.route.paramMap.subscribe(params => {
-      const pathSegment = this.route.snapshot.url[1]?.path;
-      if (pathSegment === 'categorie') {
-        this.categorieNom = params.get('categorieNom') ?? '';
-        this.videoService.getVideosByCategorie(this.categorieNom).subscribe(
-          data => {
-            this.allVideos = data;
-          },
-          error => {
-            console.log(error);
-          }
-        )
-      } else {
-        this.getVideos();
-      }
+  onSearchInput(event: Event): void {
+    const input = (event.target as HTMLInputElement).value;
+    this.params.titre = input;
+
+    // Update queryParams in the URL
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {name: this.params.titre}, // update only the 'name' query param
+      queryParamsHandling: 'merge' // merge with the existing query params
     });
+
+    this.search();
   }
+
 
   toggleFilters() {
     this.showFilters = !this.showFilters;

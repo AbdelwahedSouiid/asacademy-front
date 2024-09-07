@@ -35,8 +35,6 @@ const routes: Routes = [
       {path: 'unauth', component: UnauthComponent},
       //gestion video
       {path: 'videos', component: VideosComponent},
-      {path: 'videos/categorie/:categorieNom', component: VideosComponent},
-      {path: 'videos/search/:searchTerm', component: VideosComponent},
       {path: 'videos/video-detail/:id', component: WatchComponent},
       //gestion cour
       {path: 'cours/cour-detail/:id', component: CourDetailComponent},
