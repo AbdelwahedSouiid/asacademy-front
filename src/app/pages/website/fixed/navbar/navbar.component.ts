@@ -110,4 +110,13 @@ export class NavbarComponent implements OnInit {
       }
     });
   }
+
+  reclam() {
+    if (this.authService.isAuthenticated) {
+      this.router.navigate(['/contact']);
+    } else {
+      localStorage.setItem("redirectUrl", '/contact');
+      this.router.navigate(['/login']);
+    }
+  }
 }

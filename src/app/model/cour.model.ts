@@ -11,7 +11,6 @@ export enum PaiementType {
 
 export interface Cour {
 
-
   id: string;
   name: string;
   description: string;

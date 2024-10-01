@@ -133,9 +133,10 @@
                 </div>
                 <div class="col-7">
                   <div class="features-content d-flex flex-column">
-                    <p class="text-uppercase mb-2">Sports</p>
+                    <p class="text-uppercase mb-2">{{ video.categorie.nom }}</p>
                     <a>{{ video.titre }}</a>
-                    <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
+                    <small class="text-body d-block"><i
+                      class="fas fa-calendar-alt me-1"></i>{{ video.dateAjout }}</small>
                   </div>
                 </div>
               </div>

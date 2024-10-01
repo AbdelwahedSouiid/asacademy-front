@@ -5,6 +5,7 @@ import {DashboardComponent} from "./dashboard/dashboard.component";
 import {MainComponent} from "./fixed/main/main.component";
 import {AuthenticationGuard} from "../../guards/authentication.guard";
 import {AuthorizationGuard} from "../../guards/autorization.guard";
+import {ChatbotComponent} from "./chatbot/chatbot.component";
 
 
 const routes: Routes = [
@@ -18,6 +19,10 @@ const routes: Routes = [
       {path: 'cours', loadChildren: () => import('./cour/cour.module').then(m => m.CourModule)},
       {path: 'categories', loadChildren: () => import('./categorie/categorie.module').then(m => m.CategorieModule)},
       {
+        path: 'reclamations',
+        loadChildren: () => import('./reclamation/reclamation.module').then(m => m.ReclamationModule)
+      },
+      {
         path: 'inscriptions',
         loadChildren: () => import('./inscription/inscription.module').then(m => m.InscriptionModule)
       },
@@ -27,6 +32,7 @@ const routes: Routes = [
       {path: 'avis', loadChildren: () => import('./avis/avis.module').then(m => m.AvisModule)},
       {path: 'videos', loadChildren: () => import('./video/video.module').then(m => m.VideoModule)},
       {path: 'tags', loadChildren: () => import('./tag/tag.module').then(m => m.TagModule)},
+      {path: 'chatbot', component: ChatbotComponent}
     ]
   }
 ];

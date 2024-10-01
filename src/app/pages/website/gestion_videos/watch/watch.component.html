@@ -22,16 +22,15 @@
             </div>
           </div>
           <div class="my-4">
-            <a href="#" class="h4">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</a>
+            <a href="#" class="h4">{{ currentVideo.titre }}</a>
           </div>
           <div class="d-flex justify-content-between">
             <a href="#" class="text-dark link-hover me-3"><i class="fa fa-clock"></i> 06 minute read</a>
             <a href="#" class="text-dark link-hover me-3"><i class="fa fa-eye"></i> 3.5k Views</a>
             <a href="#" class="text-dark link-hover me-3"><i class="fa fa-comment-dots"></i> 05 Comment</a>
-            <a href="#" class="text-dark link-hover"><i class="fa fa-arrow-up"></i> 1.5k Share</a>
+       
           </div>
-          <p class="my-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-            been the industry's standard dummy Lorem Ipsum has been the industry's standard dummy..
+          <p class="my-4">{{ currentVideo.description }}
           </p>
         </div>
         <div class="col-lg-4">
@@ -47,9 +46,10 @@
                 </div>
                 <div class="col-7">
                   <div class="features-content d-flex flex-column">
-                    <p class="text-uppercase mb-2">Sports</p>
-                    <a href="#" class="h6">Get the best speak market, news.</a>
-                    <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
+                    <p class="text-uppercase mb-2">{{ video.categorie.nom }}</p>
+                    <a href="#" class="h6">{{ video.titre }}</a>
+                    <small class="text-body d-block"><i
+                      class="fas fa-calendar-alt me-1"></i>{{ video.dateAjout }}</small>
                   </div>
                 </div>
               </div>

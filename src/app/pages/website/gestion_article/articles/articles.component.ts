@@ -16,7 +16,7 @@ export class ArticlesComponent implements OnInit {
   startDate: Date = new Date();
   endDate: Date = new Date();
   categories: Categorie[] = [];
-  categorieNom: string = '';
+
   blogs!: Blog[];
 
   showFilters: boolean = true;

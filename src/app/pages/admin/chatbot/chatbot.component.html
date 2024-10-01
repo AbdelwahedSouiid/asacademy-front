@@ -1,0 +1,75 @@
+<div class="container-fluid py-5">
+  <div class="container">
+    <div class="row clearfix">
+      <div class="col-lg-12">
+        <div class="card chat-app">
+          <div id="plist" class="people-list">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+              </div>
+              <input type="text" class="form-control" placeholder="Search...">
+            </div>
+            <ul class="list-unstyled chat-list mt-2 mb-0">
+              <li class="clearfix">
+                <div class="about">
+                  <div class="name">chat 1</div>
+                  <div class="status"><i class="fa fa-circle offline"></i> left 7 mins ago</div>
+                </div>
+              </li>
+              <li class="clearfix active">
+                <div class="about">
+                  <div class="name"> chat 2</div>
+                  <div class="status"><i class="fa fa-circle online"></i> online</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="chat">
+            <div class="chat-header clearfix">
+              <div class="row">
+                <div class="col-lg-10">
+                  <div class="chat-about">
+                    <h6 class="m-b-0">chat 2</h6>
+                    <small>date de creation : </small>
+                  </div>
+                </div>
+                <div class="col-lg-2 hidden-sm text-right">
+                  <a href="javascript:void(0);" class="btn btn-outline-secondary"><i class="bi bi-file"></i>Choose File</a>
+
+                </div>
+              </div>
+            </div>
+            <div class="chat-history" *ngFor="let chat of messageList ">
+              <ul class="">
+                <div class="chat-history">
+                  <ul class="m-b-0">
+                    <li class="clearfix">
+                      <div class="message other-message float-right"> {{ chat.userQuestion }}
+                      </div>
+                    </li>
+                    <li class="clearfix">
+                      <div class="message my-message">{{ chat.botResponse }}</div>
+                    </li>
+                  </ul>
+                </div>
+
+              </ul>
+            </div>
+            <form [formGroup]="chatForm" (ngSubmit)="handleAskBot()">
+              <div class="chat-message clearfix">
+                <div class="input-group mb-0">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="bi bi-send"></i></span>
+                  </div>
+                  <input type="text" class="form-control" formControlName="userQuestion"
+                         placeholder="Enter text here...">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

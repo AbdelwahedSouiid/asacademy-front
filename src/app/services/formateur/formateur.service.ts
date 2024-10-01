@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpEvent, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Formateur} from "../../model/formateur.model";
+import {environment} from "../../../environments/environment";
 
 
 @Injectable({
@@ -9,7 +10,7 @@ import {Formateur} from "../../model/formateur.model";
 })
 export class FormateurService {
 
-  private url: string = 'http://localhost:8081/projet/formateur';
+  private url = environment.url + "/formateur";
 
   constructor(private http: HttpClient) {
   }

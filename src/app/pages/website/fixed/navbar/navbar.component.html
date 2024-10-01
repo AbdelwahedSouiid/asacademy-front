@@ -60,7 +60,7 @@
                 <a class="nav-link" [routerLink]="['/about']" [class.active]="activeLink === 'about'">About</a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link" [routerLink]="['/contact']" [class.active]="activeLink === 'contact'">Contact</a>
+                <a class="nav-link" (click)="reclam()" [class.active]="activeLink === 'contact'">Contact</a>
               </li>
               <li class="nav-item">
                 <div *ngIf="authService.isAuthenticated" class="d-flex align-items-center">

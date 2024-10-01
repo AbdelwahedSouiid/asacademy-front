@@ -25,6 +25,7 @@ import {AboutComponent} from './about/about.component';
 import {FilterPipe} from './gestion_cour/filter.pipe';
 import {ArticleDetailComponent} from './gestion_article/article-detail/article-detail/article-detail.component';
 import {WatchComponent} from './gestion_videos/watch/watch.component';
+import {ChatbotComponent} from '../admin/chatbot/chatbot.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import {WatchComponent} from './gestion_videos/watch/watch.component';
     AboutComponent,
     FilterPipe,
     ArticleDetailComponent,
-    WatchComponent
+    WatchComponent,
+    ChatbotComponent
   ],
   exports: [],
   providers: [

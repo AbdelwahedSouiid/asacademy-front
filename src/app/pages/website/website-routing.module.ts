@@ -17,6 +17,8 @@ import {ArticlesComponent} from "./gestion_article/articles/articles.component";
 import {AboutComponent} from "./about/about.component";
 import {ArticleDetailComponent} from "./gestion_article/article-detail/article-detail/article-detail.component";
 import {WatchComponent} from "./gestion_videos/watch/watch.component";
+import {ChatbotComponent} from "../admin/chatbot/chatbot.component";
+import {AuthenticationGuard} from "../../guards/authentication.guard";
 
 
 const routes: Routes = [
@@ -25,7 +27,7 @@ const routes: Routes = [
     component: MainComponent,
     children: [
       {path: 'home', component: HomeComponent},
-      {path: 'contact', component: ContactComponent},
+      {path: 'contact', component: ContactComponent, canActivate: [AuthenticationGuard]},
       {path: 'about', component: AboutComponent},
       {path: 'login', component: LoginComponent},
       {path: 'register', component: RegisterComponent},
@@ -45,6 +47,7 @@ const routes: Routes = [
       {path: 'articles/article-detail/:id', component: ArticleDetailComponent},
       {path: 'articles/categorie/:categorieNom', component: ArticlesComponent},
       {path: 'articles/search/:searchTerm', component: ArticlesComponent},
+
     ]
   }
 ];

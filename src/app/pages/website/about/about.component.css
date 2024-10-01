@@ -14,7 +14,6 @@
   padding: 35px;
   display: flex;
   align-items: center;
-  border-raduis: 8px;
   backdrop-filter: blur(10px);
   flex-direction: column;
   background: rgb(255, 255, 255, 0.2);
